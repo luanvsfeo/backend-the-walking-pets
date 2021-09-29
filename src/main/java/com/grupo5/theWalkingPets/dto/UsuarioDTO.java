@@ -1,5 +1,7 @@
 package com.grupo5.theWalkingPets.dto;
 
+import com.grupo5.theWalkingPets.entity.Usuario;
+
 public class UsuarioDTO {
 
     private String nome;
@@ -17,6 +19,18 @@ public class UsuarioDTO {
     }
 
     public UsuarioDTO() {
+    }
+
+    public boolean isValid(){
+        return this.nome != null &&
+                this.email != null &&
+                this.senha != null &&
+                this.cep != null &&
+                this.telefone != null;
+    }
+
+    public Usuario converterParaUsuario(){
+        return new Usuario(this.nome,this.email,this.senha,null, this.telefone);
     }
 
     public String getNome() {

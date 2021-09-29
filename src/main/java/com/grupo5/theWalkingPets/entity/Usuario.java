@@ -1,10 +1,17 @@
 package com.grupo5.theWalkingPets.entity;
 
+import com.grupo5.theWalkingPets.util.ConversaoUtil;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
-@Table
-public class Usuario {
+@Table(name = "usuario")
+public class Usuario  implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,6 +36,16 @@ public class Usuario {
     @Column(name = Colunas.VERIFICADO)
     private Boolean verificado;
 
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToMany
+    @JoinTable(
+            name = "usuarios_permissoes",
+            joinColumns = @JoinColumn(
+                    name = "usuario_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "permissao_id", referencedColumnName = "id"))
+    private Collection<Permissao> permissoes;
+
     public Usuario(Long id, String nome, String email, String senha, String bairro, String telefone, Boolean verificado) {
         this.id = id;
         this.nome = nome;
@@ -37,6 +54,15 @@ public class Usuario {
         this.bairro = bairro;
         this.telefone = telefone;
         this.verificado = verificado;
+    }
+
+    public Usuario(String nome, String email, String senha, String bairro, String telefone) {
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+        this.bairro = bairro;
+        this.telefone = telefone;
+        this.verificado = false;
     }
 
     public Usuario() {
@@ -97,6 +123,57 @@ public class Usuario {
 
     public void setVerificado(Boolean verificado) {
         this.verificado = verificado;
+    }
+
+    public void changePassword() {
+        this.senha = ConversaoUtil.encode(this.senha);
+    }
+
+    public boolean validForLogin(){
+        return this.senha != null && this.email != null;
+    }
+
+    public Collection<Permissao> getPermissoes() {
+        return permissoes;
+    }
+
+    public void setPermissoes(Collection<Permissao> permissoes) {
+        this.permissoes = permissoes;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.permissoes;
+    }
+
+    @Override
+    public String getPassword() {
+        return this.senha;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
     public static class Colunas{

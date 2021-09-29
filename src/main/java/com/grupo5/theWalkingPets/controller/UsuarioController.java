@@ -1,6 +1,7 @@
 package com.grupo5.theWalkingPets.controller;
 
 import com.grupo5.theWalkingPets.dto.UsuarioDTO;
+import com.grupo5.theWalkingPets.service.UsuarioService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -8,24 +9,40 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/usuario")
 public class UsuarioController {
 
+    private final UsuarioService usuarioService;
 
-    @PostMapping
-    public ResponseEntity<?> create(@RequestParam("usuario") UsuarioDTO usuarioDTO){
+    public UsuarioController(UsuarioService usuarioService) {
+        this.usuarioService = usuarioService;
+    }
 
-        // cria o usuario :D
+    @PostMapping("/criacao")
+    public ResponseEntity<?> create(@RequestBody UsuarioDTO usuarioDTO){
 
-        return ResponseEntity.ok("");
+        if(!usuarioDTO.isValid()){
+             return ResponseEntity.badRequest().body("Campo faltando");
+        }
+
+        if(usuarioService.criarUsuarioPessoaFisica(usuarioDTO.converterParaUsuario()) == null){
+            return ResponseEntity.badRequest().body("Email ja existente");
+        }
+
+        return ResponseEntity.ok("Usuario criado");
     }
 
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestParam("email") String email,@RequestParam("senha")String senha){
+    public ResponseEntity<?> login(@RequestBody UsuarioDTO usuarioDTO){
 
-        // autenticar o email e a senha com o que esta no banco
-        // gerar jwt e retornar
+        final String token = usuarioService.generateToken(usuarioDTO.converterParaUsuario());
+
+        if(token != null){
+            return ResponseEntity.ok(token);
+        }else{
+            return ResponseEntity.badRequest().body("Ocorreu um erro ao logar");
+        }
+
         // redirecionar para endpoint get de animais ou get inicial de usuario com o header de authorization(front ou back ?)
 
-        return ResponseEntity.ok("");
     }
 
 
@@ -44,6 +61,6 @@ public class UsuarioController {
         //PRECISA DE AUTHORIZATION
         // telas iniciais do app ?
 
-        return ResponseEntity.ok("");
+        return ResponseEntity.ok("foi meu nobre");
     }
 }
