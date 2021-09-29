@@ -16,13 +16,13 @@ public class UsuarioController {
     }
 
     @PostMapping("/criacao")
-    public ResponseEntity<?> create(@RequestBody UsuarioDTO usuarioDTO){
+    public ResponseEntity<?> create(@RequestBody UsuarioDTO usuarioDTO) {
 
-        if(!usuarioDTO.isValid()){
-             return ResponseEntity.badRequest().body("Campo faltando");
+        if (!usuarioDTO.isValid()) {
+            return ResponseEntity.badRequest().body("Campo faltando");
         }
 
-        if(usuarioService.criarUsuarioPessoaFisica(usuarioDTO.converterParaUsuario()) == null){
+        if (usuarioService.criarUsuarioPessoaFisica(usuarioDTO.converterParaUsuario()) == null) {
             return ResponseEntity.badRequest().body("Email ja existente");
         }
 
@@ -31,13 +31,13 @@ public class UsuarioController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody UsuarioDTO usuarioDTO){
+    public ResponseEntity<?> login(@RequestBody UsuarioDTO usuarioDTO) {
 
         final String token = usuarioService.generateToken(usuarioDTO.converterParaUsuario());
 
-        if(token != null){
+        if (token != null) {
             return ResponseEntity.ok(token);
-        }else{
+        } else {
             return ResponseEntity.badRequest().body("Ocorreu um erro ao logar");
         }
 
@@ -47,7 +47,7 @@ public class UsuarioController {
 
 
     @PostMapping("/verificar")
-    public ResponseEntity<?> verificar(){
+    public ResponseEntity<?> verificar() {
         //PRECISA DE AUTHORIZATION
         // altera a flag de verificado para true
 
@@ -57,7 +57,7 @@ public class UsuarioController {
 
 
     @GetMapping("/primeiros-passos")
-    public ResponseEntity<?> inicio(){
+    public ResponseEntity<?> inicio() {
         //PRECISA DE AUTHORIZATION
         // telas iniciais do app ?
 

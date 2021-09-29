@@ -21,7 +21,7 @@ public class UsuarioDTO {
     public UsuarioDTO() {
     }
 
-    public boolean isValid(){
+    public boolean isValid() {
         return this.nome != null &&
                 this.email != null &&
                 this.senha != null &&
@@ -29,8 +29,8 @@ public class UsuarioDTO {
                 this.telefone != null;
     }
 
-    public Usuario converterParaUsuario(){
-        return new Usuario(this.nome,this.email,this.senha,null, this.telefone);
+    public Usuario converterParaUsuario() {
+        return new Usuario(this.nome, this.email, this.senha, null, this.telefone);
     }
 
     public String getNome() {
