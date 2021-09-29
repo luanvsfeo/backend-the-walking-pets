@@ -17,40 +17,40 @@ public class Animal {
     @Column(name = Colunas.NOME)
     private String nome;
 
-    @Column(name = "id")
+    @Column(name = Colunas.ESPECIE)
     private Especie especie;
 
-    @Column(name = "id")
+    @Column(name = Colunas.RACA)
     private String raca;
 
-    @Column(name = "id")
+    @Column(name = Colunas.SEXO)
     private String sexo;
 
-    @Column(name = "id")
+    @Column(name = Colunas.IDADE)
     private String idade;
 
-    @Column(name = "id")
+    @Column(name = Colunas.PELAGEM)
     private String pelagem;
 
-    @Column(name = "id")
+    @Column(name = Colunas.PORTE)
     private Porte porte;
 
-    @Column(name = "id")
+    @Column(name = Colunas.TEMPERAMENTO)
     private Temperamento temperamento;
 
-    @Column(name = "id")
+    @Column(name = Colunas.CASTRADO)
     private boolean castrado;
 
-    @Column(name = "id")
+    @Column(name = Colunas.VACINADO)
     private boolean vacinado;
 
-    @Column(name = "id")
+    @Column(name = Colunas.PERDIDO)
     private boolean perdido;
 
-    @Column(name = "id")
+    @Column(name = Colunas.ANILHA)
     private String anilha;
 
-    @Column(name = "id")
+    @Column(name = Colunas.FOTO)
     private String foto; // objeto dedicado depois
 
 
