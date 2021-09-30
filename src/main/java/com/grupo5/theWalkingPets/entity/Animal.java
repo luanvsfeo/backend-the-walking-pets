@@ -64,6 +64,25 @@ public class Animal {
     public Animal() {
     }
 
+
+    public Animal(Long id, String nome, Especie especie, String raca, Sexo sexo, String idade, String pelagem, Porte porte, Temperamento temperamento, boolean castrado, boolean vacinado, boolean perdido, String anilha, String foto, Usuario usuario) {
+        this.id = id;
+        this.nome = nome;
+        this.especie = especie;
+        this.raca = raca;
+        this.sexo = sexo;
+        this.idade = idade;
+        this.pelagem = pelagem;
+        this.porte = porte;
+        this.temperamento = temperamento;
+        this.castrado = castrado;
+        this.vacinado = vacinado;
+        this.perdido = perdido;
+        this.anilha = anilha;
+        this.foto = foto;
+        this.usuario = usuario;
+    }
+
     public Long getId() {
         return id;
     }
