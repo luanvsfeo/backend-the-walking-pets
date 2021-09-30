@@ -73,5 +73,4 @@ public class UsuarioDTO {
         this.telefone = telefone;
     }
 
-
 }

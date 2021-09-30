@@ -2,6 +2,7 @@ package com.grupo5.theWalkingPets.entity;
 
 import com.grupo5.theWalkingPets.enumx.Especie;
 import com.grupo5.theWalkingPets.enumx.Porte;
+import com.grupo5.theWalkingPets.enumx.Sexo;
 import com.grupo5.theWalkingPets.enumx.Temperamento;
 
 import javax.persistence.*;
@@ -17,14 +18,16 @@ public class Animal {
     @Column(name = Colunas.NOME)
     private String nome;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = Colunas.ESPECIE)
     private Especie especie;
 
     @Column(name = Colunas.RACA)
     private String raca;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = Colunas.SEXO)
-    private String sexo;
+    private Sexo sexo;
 
     @Column(name = Colunas.IDADE)
     private String idade;
@@ -32,9 +35,11 @@ public class Animal {
     @Column(name = Colunas.PELAGEM)
     private String pelagem;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = Colunas.PORTE)
     private Porte porte;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = Colunas.TEMPERAMENTO)
     private Temperamento temperamento;
 
@@ -53,6 +58,11 @@ public class Animal {
     @Column(name = Colunas.FOTO)
     private String foto; // objeto dedicado depois
 
+    //DONO DO MENO
+    private Usuario usuario;
+
+    public Animal() {
+    }
 
     public Long getId() {
         return id;
@@ -86,11 +96,11 @@ public class Animal {
         this.raca = raca;
     }
 
-    public String getSexo() {
+    public Sexo getSexo() {
         return sexo;
     }
 
-    public void setSexo(String sexo) {
+    public void setSexo(Sexo sexo) {
         this.sexo = sexo;
     }
 
