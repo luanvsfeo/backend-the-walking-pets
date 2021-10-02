@@ -1,5 +1,6 @@
 package com.grupo5.theWalkingPets.entity;
 
+import com.grupo5.theWalkingPets.dto.AnimalDTO;
 import com.grupo5.theWalkingPets.enumx.Especie;
 import com.grupo5.theWalkingPets.enumx.Porte;
 import com.grupo5.theWalkingPets.enumx.Sexo;
@@ -52,13 +53,17 @@ public class Animal {
     @Column(name = Colunas.PERDIDO)
     private boolean perdido;
 
+    @Column(name = Colunas.DOAR)
+    private boolean doar;
+
     @Column(name = Colunas.ANILHA)
     private String anilha;
 
     @Column(name = Colunas.FOTO)
     private String foto; // objeto dedicado depois
 
-    //DONO DO MENO
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
     public Animal() {
@@ -195,6 +200,42 @@ public class Animal {
         this.foto = foto;
     }
 
+    public boolean isDoar() {
+        return doar;
+    }
+
+    public void setDoar(boolean doar) {
+        this.doar = doar;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public AnimalDTO converterParaDTO(){
+        AnimalDTO animalDTO = new AnimalDTO();
+        animalDTO.setAnilha(this.anilha);
+        animalDTO.setCastrado(this.castrado);
+        animalDTO.setEspecie(this.especie);
+        animalDTO.setIdade(this.idade);
+        animalDTO.setNome(this.nome);
+        animalDTO.setPelagem(this.pelagem);
+        animalDTO.setPerdido(this.perdido);
+        animalDTO.setPorte(this.porte );
+        animalDTO.setRaca(this.raca);
+        animalDTO.setTemperamento(this.temperamento);
+        animalDTO.setPorte(this.porte);
+        animalDTO.setVacinado(this.vacinado);
+        animalDTO.setSexo(this.sexo);
+
+
+        return animalDTO;
+    }
+
     public static class Colunas {
         public static final String ID = "ID";
         public static final String NOME = "NOME";
@@ -210,5 +251,6 @@ public class Animal {
         public static final String PERDIDO = "PERDIDO";
         public static final String ANILHA = "ANILHA";
         public static final String FOTO = "FOTO";
+        public static final String DOAR = "DOAR";
     }
 }

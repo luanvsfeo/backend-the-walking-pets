@@ -1,6 +1,7 @@
 package com.grupo5.theWalkingPets.dto;
 
 import com.grupo5.theWalkingPets.entity.Animal;
+import com.grupo5.theWalkingPets.entity.Usuario;
 import com.grupo5.theWalkingPets.enumx.Especie;
 import com.grupo5.theWalkingPets.enumx.Porte;
 import com.grupo5.theWalkingPets.enumx.Sexo;
@@ -28,6 +29,22 @@ public class AnimalDTO {
     public AnimalDTO() {
     }
 
+    public AnimalDTO(Long id, String nome, Especie especie, String raca, Sexo sexo, String idade, String pelagem, Porte porte, Temperamento temperamento, boolean castrado, boolean vacinado, boolean perdido, String anilha, MultipartFile foto) {
+        this.id = id;
+        this.nome = nome;
+        this.especie = especie;
+        this.raca = raca;
+        this.sexo = sexo;
+        this.idade = idade;
+        this.pelagem = pelagem;
+        this.porte = porte;
+        this.temperamento = temperamento;
+        this.castrado = castrado;
+        this.vacinado = vacinado;
+        this.perdido = perdido;
+        this.anilha = anilha;
+        this.foto = foto;
+    }
 
     public Long getId() {
         return id;
@@ -141,7 +158,26 @@ public class AnimalDTO {
         this.foto = foto;
     }
 
-    public Animal converterToAnimal(){
-        return new Animal();
+    public Animal converterToAnimal(Usuario usuario){
+        Animal animal = new Animal();
+        animal.setAnilha(this.anilha);
+        animal.setCastrado(this.castrado);
+        animal.setEspecie(this.especie);
+        animal.setIdade(this.idade);
+        animal.setNome(this.nome);
+        animal.setSexo(this.sexo);
+        animal.setVacinado(this.vacinado);
+        animal.setRaca(this.raca);
+        animal.setTemperamento(this.temperamento);
+        animal.setPerdido(this.perdido);
+        animal.setPorte(this.porte);
+        animal.setPelagem(this.pelagem);
+        animal.setDoar(true);
+
+        //animal.setFoto(this.foto); base64 ?
+        animal.setUsuario(usuario);
+
+
+        return animal;
     }
 }
