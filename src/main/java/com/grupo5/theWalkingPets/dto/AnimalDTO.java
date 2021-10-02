@@ -24,12 +24,15 @@ public class AnimalDTO {
     private boolean perdido;
     private String anilha;
     private MultipartFile foto; // objeto dedicado depois
+    private String bairro;
+    private String uf;
+    private String cidade;
 
 
     public AnimalDTO() {
     }
 
-    public AnimalDTO(Long id, String nome, Especie especie, String raca, Sexo sexo, String idade, String pelagem, Porte porte, Temperamento temperamento, boolean castrado, boolean vacinado, boolean perdido, String anilha, MultipartFile foto) {
+    public AnimalDTO(Long id, String nome, Especie especie, String raca, Sexo sexo, String idade, String pelagem, Porte porte, Temperamento temperamento, boolean castrado, boolean vacinado, boolean perdido, String anilha, MultipartFile foto, String bairro, String uf, String cidade) {
         this.id = id;
         this.nome = nome;
         this.especie = especie;
@@ -44,6 +47,9 @@ public class AnimalDTO {
         this.perdido = perdido;
         this.anilha = anilha;
         this.foto = foto;
+        this.bairro = bairro;
+        this.uf = uf;
+        this.cidade = cidade;
     }
 
     public Long getId() {
@@ -156,6 +162,30 @@ public class AnimalDTO {
 
     public void setFoto(MultipartFile foto) {
         this.foto = foto;
+    }
+
+    public String getBairro() {
+        return bairro;
+    }
+
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
+    }
+
+    public String getUf() {
+        return uf;
+    }
+
+    public void setUf(String uf) {
+        this.uf = uf;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
     }
 
     public Animal converterToAnimal(Usuario usuario){

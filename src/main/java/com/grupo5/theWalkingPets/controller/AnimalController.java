@@ -2,9 +2,8 @@ package com.grupo5.theWalkingPets.controller;
 
 import com.grupo5.theWalkingPets.dto.AnimalDTO;
 import com.grupo5.theWalkingPets.entity.Usuario;
-import com.grupo5.theWalkingPets.repository.UsuarioRepository;
 import com.grupo5.theWalkingPets.service.AnimalService;
-import com.grupo5.theWalkingPets.util.JwtTokenUtil;
+import com.grupo5.theWalkingPets.service.UsuarioService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,21 +15,22 @@ public class AnimalController {
 
     private final AnimalService animalService;
 
-    private final UsuarioRepository usuarioRepository;
+    private final UsuarioService usuarioService;
 
-    private final JwtTokenUtil jwtTokenUtil;
-
-    public AnimalController(AnimalService animalService, UsuarioRepository usuarioRepository, JwtTokenUtil jwtTokenUtil) {
+    public AnimalController(AnimalService animalService, UsuarioService usuarioService) {
         this.animalService = animalService;
-        this.usuarioRepository = usuarioRepository;
-        this.jwtTokenUtil = jwtTokenUtil;
+        this.usuarioService = usuarioService;
+    }
+
+    @GetMapping("/perdidos")
+    public ResponseEntity<?> perdidos(){
+        //TODO - Listagem de animais com flag de perdido como true
+        return ResponseEntity.ok().body(animalService.buscarPerdidos());
     }
 
     @GetMapping("/adocao")
     public ResponseEntity<?> adocao(){
         //TODO - Listagem de animais de outros usuarios
-
-        // TODO - FAZER SERVICE PARA FILTRO DE ANIMAIS COM IMPL REPOSITORY
         return ResponseEntity.ok().body(animalService.buscarPorFiltro());
     }
 
@@ -38,9 +38,7 @@ public class AnimalController {
     public ResponseEntity<?> doacao(HttpServletRequest request){
         //TODO - Listagem dos seus animais
 
-        final String requestTokenHeader = request.getHeader("Authorization");
-
-        Usuario user = usuarioRepository.findByEmail(jwtTokenUtil.getUsernameFromToken(requestTokenHeader.substring(7)));
+        Usuario user = usuarioService.buscarUsuarioPorToken(request.getHeader("Authorization"));
 
         return ResponseEntity.ok().body(animalService.buscarMeusAnimais(user));
     }
@@ -49,9 +47,7 @@ public class AnimalController {
     public ResponseEntity<?> cadastro(@RequestBody AnimalDTO animalDTO, HttpServletRequest request){
         //TODO -  cadastro um animal associado ao usuario
 
-        final String requestTokenHeader = request.getHeader("Authorization");
-
-        Usuario user = usuarioRepository.findByEmail(jwtTokenUtil.getUsernameFromToken(requestTokenHeader.substring(7)));
+        Usuario user = usuarioService.buscarUsuarioPorToken(request.getHeader("Authorization"));
 
         animalService.salvar(animalDTO.converterToAnimal(user));
 
@@ -62,9 +58,7 @@ public class AnimalController {
     public ResponseEntity<?> atualizacao(@RequestBody AnimalDTO animalDTO, HttpServletRequest request){
         //TODO - atualiza um animal em especifico
 
-        final String requestTokenHeader = request.getHeader("Authorization");
-
-        Usuario user = usuarioRepository.findByEmail(jwtTokenUtil.getUsernameFromToken(requestTokenHeader.substring(7)));
+        Usuario user = usuarioService.buscarUsuarioPorToken(request.getHeader("Authorization"));
 
         animalService.salvar(animalDTO.converterToAnimal(user));
 

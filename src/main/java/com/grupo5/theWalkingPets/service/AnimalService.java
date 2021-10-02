@@ -23,10 +23,16 @@ public class AnimalService {
     }
 
     public List<AnimalDTO> buscarPorFiltro(){
+        //TODO - FAZER FILTROS PARA BUSCA MAIS PERSONALIZADA
         return converterParaDTO(animalRepository.findAllByDoarTrue());
     }
 
-    public List<AnimalDTO> buscarMeusAnimais(Usuario usuario){
+    public List<AnimalDTO> buscarPerdidos(){ //provisorio
+        //TODO - FAZER FILTROS PARA BUSCA MAIS PERSONALIZADA
+        return converterParaDTO(animalRepository.findAllByPerdidoTrue());
+    }
+
+    public List<AnimalDTO> buscarMeusAnimais(Usuario usuario){ // provisorio
         return converterParaDTO(animalRepository.findAllByUsuario(usuario));
     }
 

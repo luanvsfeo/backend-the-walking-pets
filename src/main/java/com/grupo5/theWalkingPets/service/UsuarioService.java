@@ -60,6 +60,10 @@ public class UsuarioService {
         return null;
     }
 
+    public Usuario buscarUsuarioPorToken(String token){
+        return usuarioRepository.findByEmail(jwtTokenUtil.getUsernameFromToken(token.substring(7)));
+    }
+
 
     @EventListener(ApplicationReadyEvent.class)
     private void createIfDbIsEmpty() {

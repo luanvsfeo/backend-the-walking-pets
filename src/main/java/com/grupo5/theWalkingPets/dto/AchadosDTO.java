@@ -1,14 +1,7 @@
-package com.grupo5.theWalkingPets.entity;
+package com.grupo5.theWalkingPets.dto;
 
-import javax.persistence.*;
-import java.util.Date;
+public class AchadosDTO {
 
-@Entity
-public class Achados {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = Animal.Colunas.ID)
     private Long id;
 
     private String foto;
@@ -19,19 +12,14 @@ public class Achados {
 
     private String nome;
 
-    private Date dateOcorrencia;
-
-    public Achados() {
-    }
-
-    public Achados(Long id, String foto, String bairro, String comentario, String nome, Date dateOcorrencia) {
+    public AchadosDTO(Long id, String foto, String bairro, String comentario, String nome) {
         this.id = id;
         this.foto = foto;
         this.bairro = bairro;
         this.comentario = comentario;
         this.nome = nome;
-        this.dateOcorrencia = dateOcorrencia;
     }
+
 
     public Long getId() {
         return id;
@@ -71,13 +59,5 @@ public class Achados {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public Date getDateOcorrencia() {
-        return dateOcorrencia;
-    }
-
-    public void setDateOcorrencia(Date dateOcorrencia) {
-        this.dateOcorrencia = dateOcorrencia;
     }
 }

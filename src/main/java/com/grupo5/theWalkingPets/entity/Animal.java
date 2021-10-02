@@ -24,7 +24,7 @@ public class Animal {
     private Especie especie;
 
     @Column(name = Colunas.RACA)
-    private String raca;
+    private String raca;// provavelmente vai vim do banco mesmo ^^
 
     @Enumerated(EnumType.STRING)
     @Column(name = Colunas.SEXO)
@@ -231,7 +231,8 @@ public class Animal {
         animalDTO.setPorte(this.porte);
         animalDTO.setVacinado(this.vacinado);
         animalDTO.setSexo(this.sexo);
-
+        animalDTO.setId(this.id);
+        animalDTO.setBairro(this.usuario.getBairro());
 
         return animalDTO;
     }

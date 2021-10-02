@@ -13,6 +13,7 @@ public interface AnimalRepository extends JpaRepository<Animal,Long>  {
 
     List<Animal> findAllByDoarTrue();
 
+    List<Animal> findAllByPerdidoTrue();
 
     List<Animal> findAllByUsuario(Usuario usuario);
 }
