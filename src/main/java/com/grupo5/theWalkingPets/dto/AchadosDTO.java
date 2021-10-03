@@ -1,5 +1,9 @@
 package com.grupo5.theWalkingPets.dto;
 
+import com.grupo5.theWalkingPets.entity.Achados;
+
+import java.util.Date;
+
 public class AchadosDTO {
 
     private Long id;
@@ -12,6 +16,9 @@ public class AchadosDTO {
 
     private String nome;
 
+    public AchadosDTO() {
+    }
+
     public AchadosDTO(Long id, String foto, String bairro, String comentario, String nome) {
         this.id = id;
         this.foto = foto;
@@ -20,6 +27,23 @@ public class AchadosDTO {
         this.nome = nome;
     }
 
+    public boolean isValid(){
+        if(this.foto != null && this.bairro != null){
+            return true;
+        }
+        return false;
+    }
+
+    public Achados converterParaAchados(){
+        Achados achados = new Achados();
+        achados.setComentario(this.comentario);
+        achados.setBairro(this.bairro);
+        achados.setDateOcorrencia(new Date());
+        achados.setFoto(this.foto);
+        achados.setNome(this.nome);
+        achados.setId(this.id);
+        return achados;
+    }
 
     public Long getId() {
         return id;

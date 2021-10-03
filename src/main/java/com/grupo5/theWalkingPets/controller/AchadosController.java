@@ -1,28 +1,35 @@
 package com.grupo5.theWalkingPets.controller;
 
 import com.grupo5.theWalkingPets.dto.AchadosDTO;
+import com.grupo5.theWalkingPets.service.AchadosService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-//@RestController
-//@RequestMapping("/achados")
+@RestController
+@RequestMapping("/achados")
 public class AchadosController {
 
+    private final AchadosService achadosService;
 
-    //@GetMapping
-    public ResponseEntity<?> listagem(){
-
-
-        return ResponseEntity.ok("a");
+    public AchadosController(AchadosService achadosService) {
+        this.achadosService = achadosService;
     }
 
-    //@GetMapping
-    public ResponseEntity<?> criacao(@RequestBody AchadosDTO achadosDTO){
+    @GetMapping
+    public ResponseEntity<?> listagem() {
+          // TODO - Listagem com base na cidade atual
+        return ResponseEntity.ok(achadosService.buscarTodos());
+    }
 
+    @PostMapping
+    public ResponseEntity<?> criacao(@RequestBody AchadosDTO achadosDTO) {
 
-        return ResponseEntity.ok("a");
+        if(!achadosDTO.isValid()){
+            return ResponseEntity.badRequest().body("Campo faltante");
+        }
+
+        achadosService.salvar(achadosDTO.converterParaAchados());
+
+        return ResponseEntity.ok("Criado com sucesso");
     }
 }

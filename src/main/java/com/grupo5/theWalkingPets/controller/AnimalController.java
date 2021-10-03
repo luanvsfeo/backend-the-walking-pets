@@ -62,7 +62,6 @@ public class AnimalController {
 
         animalService.salvar(animalDTO.converterToAnimal(user));
 
-
         return ResponseEntity.ok("ok");
     }
 }

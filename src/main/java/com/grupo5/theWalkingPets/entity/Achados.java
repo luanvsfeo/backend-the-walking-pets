@@ -1,5 +1,7 @@
 package com.grupo5.theWalkingPets.entity;
 
+import com.grupo5.theWalkingPets.dto.AchadosDTO;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -80,4 +82,15 @@ public class Achados {
     public void setDateOcorrencia(Date dateOcorrencia) {
         this.dateOcorrencia = dateOcorrencia;
     }
+
+    public AchadosDTO converterParaDTO() {
+        AchadosDTO achadosDTO = new AchadosDTO();
+        achadosDTO.setComentario(this.comentario);
+        achadosDTO.setNome(this.nome);
+        achadosDTO.setBairro(this.bairro);
+        achadosDTO.setId(this.id);
+
+        return achadosDTO;
+    }
+
 }
