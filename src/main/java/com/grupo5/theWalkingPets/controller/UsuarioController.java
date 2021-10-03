@@ -1,9 +1,11 @@
 package com.grupo5.theWalkingPets.controller;
 
 import com.grupo5.theWalkingPets.dto.UsuarioDTO;
+import com.grupo5.theWalkingPets.dto.ViaCepDTO;
 import com.grupo5.theWalkingPets.service.UsuarioService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 @RestController
 @RequestMapping("/usuario")
@@ -21,6 +23,16 @@ public class UsuarioController {
         if (!usuarioDTO.isValid()) {
             return ResponseEntity.badRequest().body("Campo faltando");
         }
+
+        // comunicação com via cep
+
+        String viaCep = "https://viacep.com.br/ws/" + usuarioDTO.getCep() + "/json/";
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        ResponseEntity<ViaCepDTO> response
+                = restTemplate.getForEntity(viaCep, ViaCepDTO.class);
+
 
         if (usuarioService.criarUsuarioPessoaFisica(usuarioDTO.converterParaUsuario()) == null) {
             return ResponseEntity.badRequest().body("Email ja existente");
