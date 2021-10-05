@@ -256,4 +256,22 @@ public class Animal {
         public static final String FOTO = "FOTO";
         public static final String DOAR = "DOAR";
     }
+
+    public static class Atributos {
+        public static final String ID = "id";
+        public static final String NOME = "nome";
+        public static final String ESPECIE = "especie";
+        public static final String RACA = "raca";
+        public static final String SEXO = "sexo";
+        public static final String IDADE = "idade";
+        public static final String PELAGEM = "pelagem";
+        public static final String PORTE = "porte";
+        public static final String TEMPERAMENTO = "temperamento";
+        public static final String CASTRADO = "castrado";
+        public static final String VACINADO = "vacinado";
+        public static final String PERDIDO = "perdido";
+        public static final String ANILHA = "anilha";
+        public static final String FOTO = "foto";
+        public static final String DOAR = "doar";
+    }
 }
