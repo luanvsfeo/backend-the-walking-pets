@@ -22,9 +22,9 @@ public class AnimalService {
         animalRepository.save(animal);
     }
 
-    public List<AnimalDTO> buscarPorFiltro(){
+    public List<AnimalDTO> buscarPorFiltro(Usuario usuario){
         //TODO - FAZER FILTROS PARA BUSCA MAIS PERSONALIZADA
-        return converterParaDTO(animalRepository.findAllByDoarTrue());
+        return converterParaDTO(animalRepository.findAllByDoarTrueAndUsuarioId(usuario.getId()));
     }
 
     public List<AnimalDTO> buscarPerdidos(){ //provisorio

@@ -29,9 +29,16 @@ public class UsuarioDTO {
                 this.telefone != null;
     }
 
-    public Usuario converterParaUsuario() {
-        return new Usuario(this.nome, this.email, this.senha, null, this.telefone);
+    public Usuario converterParaUsuarioComLocalizacao(ViaCepDTO viaCepDTO) {
+        Usuario usuario =  converterParaUsuario();
+        usuario.popularLocalizacao(viaCepDTO);
+        return usuario;
     }
+
+    public Usuario converterParaUsuario() {
+        return new Usuario(this.nome, this.email, this.senha, this.telefone);
+    }
+
 
     public String getNome() {
         return nome;

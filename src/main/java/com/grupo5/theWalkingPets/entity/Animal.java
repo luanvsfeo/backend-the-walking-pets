@@ -233,6 +233,8 @@ public class Animal {
         animalDTO.setSexo(this.sexo);
         animalDTO.setId(this.id);
         animalDTO.setBairro(this.usuario.getBairro());
+        animalDTO.setCidade(this.usuario.getCidade());
+        animalDTO.setUf(this.usuario.getUf());
 
         return animalDTO;
     }

@@ -20,25 +20,25 @@ public class UsuarioController {
     @PostMapping("/criacao")
     public ResponseEntity<?> create(@RequestBody UsuarioDTO usuarioDTO) {
 
-        if (!usuarioDTO.isValid()) {
-            return ResponseEntity.badRequest().body("Campo faltando");
+        try{
+            if (!usuarioDTO.isValid()) {
+                return ResponseEntity.badRequest().body("Campo faltando");
+            }
+
+            String viaCep = "https://viacep.com.br/ws/" + usuarioDTO.getCep() + "/json/";
+
+            RestTemplate restTemplate = new RestTemplate();
+
+            ResponseEntity<ViaCepDTO> response  = restTemplate.getForEntity(viaCep, ViaCepDTO.class);
+
+            if (usuarioService.criarUsuarioPessoaFisica(usuarioDTO.converterParaUsuarioComLocalizacao(response.getBody())) == null) {
+                return ResponseEntity.badRequest().body("Email ja existente");
+            }
+
+            return ResponseEntity.ok("Usuario criado");
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
-
-        // comunicação com via cep
-
-        String viaCep = "https://viacep.com.br/ws/" + usuarioDTO.getCep() + "/json/";
-
-        RestTemplate restTemplate = new RestTemplate();
-
-        ResponseEntity<ViaCepDTO> response
-                = restTemplate.getForEntity(viaCep, ViaCepDTO.class);
-
-
-        if (usuarioService.criarUsuarioPessoaFisica(usuarioDTO.converterParaUsuario()) == null) {
-            return ResponseEntity.badRequest().body("Email ja existente");
-        }
-
-        return ResponseEntity.ok("Usuario criado");
     }
 
 
@@ -60,8 +60,8 @@ public class UsuarioController {
 
     @PostMapping("/verificar")
     public ResponseEntity<?> verificar() {
-        //PRECISA DE AUTHORIZATION
-        // altera a flag de verificado para true
+        //Procurar serviço gratis de envio de email ?
+        // TODO - altera a flag de verificado para true
 
 
         return ResponseEntity.ok("");

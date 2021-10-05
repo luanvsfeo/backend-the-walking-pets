@@ -1,5 +1,6 @@
 package com.grupo5.theWalkingPets.entity;
 
+import com.grupo5.theWalkingPets.dto.ViaCepDTO;
 import com.grupo5.theWalkingPets.util.ConversaoUtil;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -39,6 +40,9 @@ public class Usuario implements UserDetails {
     @Column(name = Colunas.CEP)
     private String cep;
 
+    @Column(name = Colunas.COORDENADAS)
+    private String coordenadas;
+
     @Column(name = Colunas.TELEFONE)
     private String telefone;
 
@@ -70,6 +74,14 @@ public class Usuario implements UserDetails {
         this.email = email;
         this.senha = senha;
         this.bairro = bairro;
+        this.telefone = telefone;
+        this.verificado = false;
+    }
+
+    public Usuario(String nome, String email, String senha, String telefone) {
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
         this.telefone = telefone;
         this.verificado = false;
     }
@@ -158,12 +170,27 @@ public class Usuario implements UserDetails {
         this.cep = cep;
     }
 
+    public String getCoordenadas() {
+        return coordenadas;
+    }
+
+    public void setCoordenadas(String coordenadas) {
+        this.coordenadas = coordenadas;
+    }
+
     public void changePassword() {
         this.senha = ConversaoUtil.encode(this.senha);
     }
 
     public boolean validForLogin() {
         return this.senha != null && this.email != null;
+    }
+
+    public void popularLocalizacao(ViaCepDTO viaCepDTO) {
+        this.bairro = viaCepDTO.getBairro();
+        this.cidade = viaCepDTO.getLocalidade();
+        this.cep = viaCepDTO.getCep().replace("-","");
+        this.uf = viaCepDTO.getUf();
     }
 
     public Collection<Permissao> getPermissoes() {
@@ -220,5 +247,6 @@ public class Usuario implements UserDetails {
         public static final String CEP = "CEP";
         public static final String TELEFONE = "TELEFONE";
         public static final String VERIFICADO = "VERIFICADO";
+        public static final String COORDENADAS = "COORDENADAS";
     }
 }

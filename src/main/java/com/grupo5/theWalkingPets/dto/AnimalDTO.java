@@ -24,6 +24,8 @@ public class AnimalDTO {
     private boolean perdido;
     private String anilha;
     private MultipartFile foto; // objeto dedicado depois
+
+    //dados vindos do dono
     private String bairro;
     private String uf;
     private String cidade;

@@ -29,13 +29,29 @@ public class AnimalController {
     }
 
     @GetMapping("/adocao")
-    public ResponseEntity<?> adocao(){
+    public ResponseEntity<?> listagemAdoacao(HttpServletRequest request){
+        Usuario user = usuarioService.buscarUsuarioPorToken(request.getHeader("Authorization"));
         //TODO - Listagem de animais de outros usuarios
-        return ResponseEntity.ok().body(animalService.buscarPorFiltro());
+        return ResponseEntity.ok().body(animalService.buscarPorFiltro(user));
+    }
+
+    @PostMapping("/adocao")
+    public ResponseEntity<?> pedidoAdocao(){
+        //TODO - Aplicação para adocao
+        return ResponseEntity.ok().body("me da o bicho ai");
     }
 
     @GetMapping("/doacao")
     public ResponseEntity<?> doacao(HttpServletRequest request){
+        //TODO - Listagem dos seus animais
+
+        Usuario user = usuarioService.buscarUsuarioPorToken(request.getHeader("Authorization"));
+
+        return ResponseEntity.ok().body(animalService.buscarMeusAnimais(user));
+    }
+
+    @GetMapping("/doacao/pedidos")
+    public ResponseEntity<?> listagemPedidosDeAdocao(HttpServletRequest request){
         //TODO - Listagem dos seus animais
 
         Usuario user = usuarioService.buscarUsuarioPorToken(request.getHeader("Authorization"));
