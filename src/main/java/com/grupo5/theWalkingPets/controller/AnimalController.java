@@ -1,5 +1,6 @@
 package com.grupo5.theWalkingPets.controller;
 
+import com.grupo5.theWalkingPets.dao.filter.AnimalFilter;
 import com.grupo5.theWalkingPets.dto.AnimalDTO;
 import com.grupo5.theWalkingPets.entity.Usuario;
 import com.grupo5.theWalkingPets.service.AnimalService;
@@ -23,16 +24,16 @@ public class AnimalController {
     }
 
     @GetMapping("/perdidos")
-    public ResponseEntity<?> perdidos(){
-        //TODO - Listagem de animais com flag de perdido como true
+    public ResponseEntity<?> perdidos(@RequestBody AnimalFilter animalFilter){
+        //TODO - mostrar apenas os animais perdidos com donos da mesma cidade e bairro
         return ResponseEntity.ok().body(animalService.buscarPerdidos());
     }
 
     @GetMapping("/adocao")
-    public ResponseEntity<?> listagemAdoacao(HttpServletRequest request){
+    public ResponseEntity<?> listagemAdoacao(@RequestBody(required = false) AnimalFilter animalFilter,HttpServletRequest request){
+        //TODO - mostrar apenas os da mesma cidade ?
         Usuario user = usuarioService.buscarUsuarioPorToken(request.getHeader("Authorization"));
-        //TODO - Listagem de animais de outros usuarios
-        return ResponseEntity.ok().body(animalService.buscarPorFiltro(user));
+        return ResponseEntity.ok().body(animalService.buscarPorFiltro(animalFilter,user));
     }
 
     @PostMapping("/adocao")
@@ -43,16 +44,14 @@ public class AnimalController {
 
     @GetMapping("/doacao")
     public ResponseEntity<?> doacao(HttpServletRequest request){
-        //TODO - Listagem dos seus animais
 
         Usuario user = usuarioService.buscarUsuarioPorToken(request.getHeader("Authorization"));
-
         return ResponseEntity.ok().body(animalService.buscarMeusAnimais(user));
     }
 
     @GetMapping("/doacao/pedidos")
     public ResponseEntity<?> listagemPedidosDeAdocao(HttpServletRequest request){
-        //TODO - Listagem dos seus animais
+        //TODO - Listagem dos pedidos de adoção para meus animais
 
         Usuario user = usuarioService.buscarUsuarioPorToken(request.getHeader("Authorization"));
 
@@ -61,7 +60,6 @@ public class AnimalController {
 
     @PostMapping
     public ResponseEntity<?> cadastro(@RequestBody AnimalDTO animalDTO, HttpServletRequest request){
-        //TODO -  cadastro um animal associado ao usuario
 
         Usuario user = usuarioService.buscarUsuarioPorToken(request.getHeader("Authorization"));
 
