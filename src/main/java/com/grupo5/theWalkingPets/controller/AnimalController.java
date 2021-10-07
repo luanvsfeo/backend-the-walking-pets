@@ -7,7 +7,6 @@ import com.grupo5.theWalkingPets.service.AnimalService;
 import com.grupo5.theWalkingPets.service.UsuarioService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
