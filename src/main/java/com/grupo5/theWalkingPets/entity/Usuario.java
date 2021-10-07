@@ -1,5 +1,6 @@
 package com.grupo5.theWalkingPets.entity;
 
+import com.grupo5.theWalkingPets.dto.ViaCepDTO;
 import com.grupo5.theWalkingPets.util.ConversaoUtil;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -11,7 +12,7 @@ import java.util.Collection;
 
 @Entity
 @Table(name = "usuario")
-public class Usuario  implements UserDetails {
+public class Usuario implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,10 +29,22 @@ public class Usuario  implements UserDetails {
     private String senha;
 
     @Column(name = Colunas.BAIRRO)
-    private String bairro;//Converter para objeto ?
+    private String bairro;
+
+    @Column(name = Colunas.UF)
+    private String uf;
+
+    @Column(name = Colunas.CIDADE)
+    private String cidade;
+
+    @Column(name = Colunas.CEP)
+    private String cep;
+
+    @Column(name = Colunas.COORDENADAS)
+    private String coordenadas;
 
     @Column(name = Colunas.TELEFONE)
-    private String telefone;//Converter para objeto ?
+    private String telefone;
 
     @Column(name = Colunas.VERIFICADO)
     private Boolean verificado;
@@ -65,9 +78,20 @@ public class Usuario  implements UserDetails {
         this.verificado = false;
     }
 
+    public Usuario(String nome, String email, String senha, String telefone) {
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+        this.telefone = telefone;
+        this.verificado = false;
+    }
+
     public Usuario() {
     }
 
+    public Usuario(Long id) {
+        this.id = id;
+    }
 
     public Long getId() {
         return id;
@@ -125,12 +149,51 @@ public class Usuario  implements UserDetails {
         this.verificado = verificado;
     }
 
+    public String getUf() {
+        return uf;
+    }
+
+    public void setUf(String uf) {
+        this.uf = uf;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+
+    public String getCoordenadas() {
+        return coordenadas;
+    }
+
+    public void setCoordenadas(String coordenadas) {
+        this.coordenadas = coordenadas;
+    }
+
     public void changePassword() {
         this.senha = ConversaoUtil.encode(this.senha);
     }
 
-    public boolean validForLogin(){
+    public boolean validForLogin() {
         return this.senha != null && this.email != null;
+    }
+
+    public void popularLocalizacao(ViaCepDTO viaCepDTO) {
+        this.bairro = viaCepDTO.getBairro();
+        this.cidade = viaCepDTO.getLocalidade();
+        this.cep = viaCepDTO.getCep().replace("-","");
+        this.uf = viaCepDTO.getUf();
     }
 
     public Collection<Permissao> getPermissoes() {
@@ -176,13 +239,17 @@ public class Usuario  implements UserDetails {
         return true;
     }
 
-    public static class Colunas{
-            public static final String ID = " ID";
-            public static final String NOME = "NOME";
-            public static final String EMAIL = "EMAIL";
-            public static final String SENHA = "SENHA";
-            public static final String BAIRRO = "BAIRRO";
-            public static final String TELEFONE = "TELEFONE";
-            public static final String VERIFICADO = "VERIFICADO";
+    public static class Colunas {
+        public static final String ID = " ID";
+        public static final String NOME = "NOME";
+        public static final String EMAIL = "EMAIL";
+        public static final String SENHA = "SENHA";
+        public static final String BAIRRO = "BAIRRO";
+        public static final String UF = "UF";
+        public static final String CIDADE = "CIDADE";
+        public static final String CEP = "CEP";
+        public static final String TELEFONE = "TELEFONE";
+        public static final String VERIFICADO = "VERIFICADO";
+        public static final String COORDENADAS = "COORDENADAS";
     }
 }

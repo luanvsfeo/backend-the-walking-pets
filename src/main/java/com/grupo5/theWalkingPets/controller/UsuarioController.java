@@ -1,9 +1,11 @@
 package com.grupo5.theWalkingPets.controller;
 
 import com.grupo5.theWalkingPets.dto.UsuarioDTO;
+import com.grupo5.theWalkingPets.dto.ViaCepDTO;
 import com.grupo5.theWalkingPets.service.UsuarioService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 @RestController
 @RequestMapping("/usuario")
@@ -16,28 +18,38 @@ public class UsuarioController {
     }
 
     @PostMapping("/criacao")
-    public ResponseEntity<?> create(@RequestBody UsuarioDTO usuarioDTO){
+    public ResponseEntity<?> create(@RequestBody UsuarioDTO usuarioDTO) {
 
-        if(!usuarioDTO.isValid()){
-             return ResponseEntity.badRequest().body("Campo faltando");
+        try{
+            if (!usuarioDTO.isValid()) {
+                return ResponseEntity.badRequest().body("Campo faltando");
+            }
+
+            String viaCep = "https://viacep.com.br/ws/" + usuarioDTO.getCep() + "/json/";
+
+            RestTemplate restTemplate = new RestTemplate();
+
+            ResponseEntity<ViaCepDTO> response  = restTemplate.getForEntity(viaCep, ViaCepDTO.class);
+
+            if (usuarioService.criarUsuarioPessoaFisica(usuarioDTO.converterParaUsuarioComLocalizacao(response.getBody())) == null) {
+                return ResponseEntity.badRequest().body("Email ja existente");
+            }
+
+            return ResponseEntity.ok("Usuario criado");
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
-
-        if(usuarioService.criarUsuarioPessoaFisica(usuarioDTO.converterParaUsuario()) == null){
-            return ResponseEntity.badRequest().body("Email ja existente");
-        }
-
-        return ResponseEntity.ok("Usuario criado");
     }
 
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody UsuarioDTO usuarioDTO){
+    public ResponseEntity<?> login(@RequestBody UsuarioDTO usuarioDTO) {
 
         final String token = usuarioService.generateToken(usuarioDTO.converterParaUsuario());
 
-        if(token != null){
+        if (token != null) {
             return ResponseEntity.ok(token);
-        }else{
+        } else {
             return ResponseEntity.badRequest().body("Ocorreu um erro ao logar");
         }
 
@@ -47,9 +59,9 @@ public class UsuarioController {
 
 
     @PostMapping("/verificar")
-    public ResponseEntity<?> verificar(){
-        //PRECISA DE AUTHORIZATION
-        // altera a flag de verificado para true
+    public ResponseEntity<?> verificar() {
+        //Procurar serviço gratis de envio de email ?
+        // TODO - altera a flag de verificado para true
 
 
         return ResponseEntity.ok("");
@@ -57,7 +69,7 @@ public class UsuarioController {
 
 
     @GetMapping("/primeiros-passos")
-    public ResponseEntity<?> inicio(){
+    public ResponseEntity<?> inicio() {
         //PRECISA DE AUTHORIZATION
         // telas iniciais do app ?
 
