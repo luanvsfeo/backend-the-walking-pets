@@ -18,7 +18,7 @@ public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
 
-    private final PermissaoRepository  permissaoRepository;
+    private final PermissaoRepository permissaoRepository;
 
     private final JwtTokenUtil jwtTokenUtil;
 
@@ -30,29 +30,29 @@ public class UsuarioService {
         this.jwtTokenUtil = jwtTokenUtil;
     }
 
-    public boolean validoParaCriacao(Usuario usuario){
+    public boolean validoParaCriacao(Usuario usuario) {
         return !usuarioRepository.existsByEmail(usuario.getEmail());
     }
 
-    public Usuario criarUsuarioPessoaFisica(Usuario usuario){
+    public Usuario criarUsuarioPessoaFisica(Usuario usuario) {
         usuario.setPermissoes(Arrays.asList(permissaoRepository.findByNome(PERMISAO_PESSOA_FISICA)));
         return criar(usuario);
     }
 
-    private Usuario criar(Usuario usuario){
-        if(validoParaCriacao(usuario)){
+    private Usuario criar(Usuario usuario) {
+        if (validoParaCriacao(usuario)) {
             usuario.changePassword();
-           return usuarioRepository.save(usuario);
-        }else{
+            return usuarioRepository.save(usuario);
+        } else {
             return null;
         }
     }
 
-    public String generateToken(Usuario user){
-        if(user.validForLogin()){
+    public String generateToken(Usuario user) {
+        if (user.validForLogin()) {
             Usuario userDb = usuarioRepository.findByEmail(user.getEmail());
-            if(userDb != null){
-                if(ConversaoUtil.matches(user.getPassword(), userDb.getPassword())){
+            if (userDb != null) {
+                if (ConversaoUtil.matches(user.getPassword(), userDb.getPassword())) {
                     return jwtTokenUtil.generateToken(userDb);
                 }
             }
@@ -60,29 +60,30 @@ public class UsuarioService {
         return null;
     }
 
-    public Usuario buscarUsuarioPorToken(String token){
+    public Usuario buscarUsuarioPorToken(String token) {
         return usuarioRepository.findByEmail(jwtTokenUtil.getUsernameFromToken(token.substring(7)));
     }
 
 
-    @EventListener(ApplicationReadyEvent.class)
-    private void createIfDbIsEmpty() {
-
-        if(usuarioRepository.count() == 0){
-
-
-            final String PERMISAO_ADMIN = "ADMIN";
-
-            Permissao permissionAdm = permissaoRepository.save(new Permissao(PERMISAO_ADMIN));
-
-            permissaoRepository.save(new Permissao(PERMISAO_PESSOA_FISICA));
-
-            Usuario user = new Usuario();
-            user.setEmail("admin");
-            user.setSenha("123");
-            user.setPermissoes(Collections.singleton(permissionAdm));
-            user.changePassword();
-            usuarioRepository.save(user);
-        }}
+//    @EventListener(ApplicationReadyEvent.class)
+//    private void createIfDbIsEmpty() {
+//
+//        if (usuarioRepository.count() == 0) {
+//
+//
+//            final String PERMISAO_ADMIN = "ADMIN";
+//
+//            Permissao permissionAdm = permissaoRepository.save(new Permissao(PERMISAO_ADMIN));
+//
+//            permissaoRepository.save(new Permissao(PERMISAO_PESSOA_FISICA));
+//
+//            Usuario user = new Usuario();
+//            user.setEmail("admin");
+//            user.setSenha("123");
+//            user.setPermissoes(Collections.singleton(permissionAdm));
+//            user.changePassword();
+//            usuarioRepository.save(user);
+//        }
+//    }
 
 }
