@@ -65,25 +65,25 @@ public class UsuarioService {
     }
 
 
-//    @EventListener(ApplicationReadyEvent.class)
-//    private void createIfDbIsEmpty() {
-//
-//        if (usuarioRepository.count() == 0) {
-//
-//
-//            final String PERMISAO_ADMIN = "ADMIN";
-//
-//            Permissao permissionAdm = permissaoRepository.save(new Permissao(PERMISAO_ADMIN));
-//
-//            permissaoRepository.save(new Permissao(PERMISAO_PESSOA_FISICA));
-//
-//            Usuario user = new Usuario();
-//            user.setEmail("admin");
-//            user.setSenha("123");
-//            user.setPermissoes(Collections.singleton(permissionAdm));
-//            user.changePassword();
-//            usuarioRepository.save(user);
-//        }
-//    }
+    @EventListener(ApplicationReadyEvent.class)
+    private void createIfDbIsEmpty() {
+
+        if (usuarioRepository.count() == 0) {
+
+
+            final String PERMISAO_ADMIN = "ADMIN";
+
+            Permissao permissionAdm = permissaoRepository.save(new Permissao(PERMISAO_ADMIN));
+
+            permissaoRepository.save(new Permissao(PERMISAO_PESSOA_FISICA));
+
+            Usuario user = new Usuario();
+            user.setEmail("admin");
+            user.setSenha("123");
+            user.setPermissoes(Collections.singleton(permissionAdm));
+            user.changePassword();
+            usuarioRepository.save(user);
+        }
+    }
 
 }
