@@ -74,7 +74,7 @@ public class AnimalController {
         }
     }
 
-    @PutMapping
+    @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> atualizacao(@RequestParam("foto") MultipartFile foto,AnimalDTO animalDTO, HttpServletRequest request) {
 
         try {

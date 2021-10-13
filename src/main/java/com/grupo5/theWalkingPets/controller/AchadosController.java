@@ -2,6 +2,7 @@ package com.grupo5.theWalkingPets.controller;
 
 import com.grupo5.theWalkingPets.dto.AchadosDTO;
 import com.grupo5.theWalkingPets.service.AchadosService;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,7 +23,7 @@ public class AchadosController {
         return ResponseEntity.ok(achadosService.buscarTodos());
     }
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> criacao(@RequestParam("foto")MultipartFile foto, AchadosDTO achadosDTO) {
 
         if(!achadosDTO.isValid()){
