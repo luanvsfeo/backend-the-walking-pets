@@ -4,6 +4,7 @@ import com.grupo5.theWalkingPets.dto.AchadosDTO;
 import com.grupo5.theWalkingPets.entity.Achados;
 import com.grupo5.theWalkingPets.repository.AchadosRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,11 +14,15 @@ public class AchadosService {
 
     private final AchadosRepository achadosRepository;
 
-    public AchadosService(AchadosRepository achadosRepository) {
+    private final FotoService fotoService;
+
+    public AchadosService(AchadosRepository achadosRepository, FotoService fotoService) {
         this.achadosRepository = achadosRepository;
+        this.fotoService = fotoService;
     }
 
-    public void salvar(Achados achados){
+    public void salvar(Achados achados, MultipartFile foto){
+        achados.setFoto(fotoService.salvar(foto));
         achadosRepository.save(achados);
     }
 

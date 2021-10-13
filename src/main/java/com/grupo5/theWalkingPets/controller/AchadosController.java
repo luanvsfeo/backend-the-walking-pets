@@ -4,6 +4,7 @@ import com.grupo5.theWalkingPets.dto.AchadosDTO;
 import com.grupo5.theWalkingPets.service.AchadosService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/achados")
@@ -22,13 +23,13 @@ public class AchadosController {
     }
 
     @PostMapping
-    public ResponseEntity<?> criacao(@RequestBody AchadosDTO achadosDTO) {
+    public ResponseEntity<?> criacao(@RequestParam("foto")MultipartFile foto, AchadosDTO achadosDTO) {
 
         if(!achadosDTO.isValid()){
             return ResponseEntity.badRequest().body("Campo faltante");
         }
 
-        achadosService.salvar(achadosDTO.converterParaAchados());
+        achadosService.salvar(achadosDTO.converterParaAchados(),foto);
 
         return ResponseEntity.ok("Criado com sucesso");
     }

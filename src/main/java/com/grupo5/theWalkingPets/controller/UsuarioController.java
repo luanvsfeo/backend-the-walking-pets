@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Objects;
+
 @RestController
 @RequestMapping("/usuario")
 public class UsuarioController {
@@ -31,13 +33,17 @@ public class UsuarioController {
 
             ResponseEntity<ViaCepDTO> response  = restTemplate.getForEntity(viaCep, ViaCepDTO.class);
 
+            if(Objects.requireNonNull(response.getBody()).getCep() == null){
+                return ResponseEntity.badRequest().body("Cep invalido");
+            }
+
             if (usuarioService.criarUsuarioPessoaFisica(usuarioDTO.converterParaUsuarioComLocalizacao(response.getBody())) == null) {
                 return ResponseEntity.badRequest().body("Email ja existente");
             }
 
             return ResponseEntity.ok("Usuario criado");
         }catch (Exception e){
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().body(e.getClass());
         }
     }
 

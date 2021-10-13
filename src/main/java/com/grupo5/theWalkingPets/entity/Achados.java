@@ -1,6 +1,7 @@
 package com.grupo5.theWalkingPets.entity;
 
 import com.grupo5.theWalkingPets.dto.AchadosDTO;
+import org.springframework.util.Base64Utils;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -13,9 +14,11 @@ public class Achados {
     @Column(name = Animal.Colunas.ID)
     private Long id;
 
-    private String foto;
-
     private String bairro;
+
+    private String cidade;
+
+    private String uf;
 
     private String comentario;
 
@@ -23,12 +26,15 @@ public class Achados {
 
     private Date dateOcorrencia;
 
+    @ManyToOne
+    @JoinColumn(name = "foto_id")
+    private Foto foto;
+
     public Achados() {
     }
 
-    public Achados(Long id, String foto, String bairro, String comentario, String nome, Date dateOcorrencia) {
+    public Achados(Long id, String bairro, String comentario, String nome, Date dateOcorrencia) {
         this.id = id;
-        this.foto = foto;
         this.bairro = bairro;
         this.comentario = comentario;
         this.nome = nome;
@@ -41,14 +47,6 @@ public class Achados {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getFoto() {
-        return foto;
-    }
-
-    public void setFoto(String foto) {
-        this.foto = foto;
     }
 
     public String getBairro() {
@@ -83,12 +81,40 @@ public class Achados {
         this.dateOcorrencia = dateOcorrencia;
     }
 
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    public String getUf() {
+        return uf;
+    }
+
+    public void setUf(String uf) {
+        this.uf = uf;
+    }
+
+    public Foto getFoto() {
+        return foto;
+    }
+
+    public void setFoto(Foto foto) {
+        this.foto = foto;
+    }
+
     public AchadosDTO converterParaDTO() {
         AchadosDTO achadosDTO = new AchadosDTO();
         achadosDTO.setComentario(this.comentario);
         achadosDTO.setNome(this.nome);
         achadosDTO.setBairro(this.bairro);
         achadosDTO.setId(this.id);
+
+        if(this.foto != null){
+            achadosDTO.setFotoBase64(new String(Base64Utils.encode(this.foto.getData())));
+        }
 
         return achadosDTO;
     }

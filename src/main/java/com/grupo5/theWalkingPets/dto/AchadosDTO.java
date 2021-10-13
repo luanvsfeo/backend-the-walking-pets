@@ -8,7 +8,7 @@ public class AchadosDTO {
 
     private Long id;
 
-    private String foto;
+    private String fotoBase64;
 
     private String bairro;
 
@@ -21,14 +21,14 @@ public class AchadosDTO {
 
     public AchadosDTO(Long id, String foto, String bairro, String comentario, String nome) {
         this.id = id;
-        this.foto = foto;
+        this.fotoBase64 = foto;
         this.bairro = bairro;
         this.comentario = comentario;
         this.nome = nome;
     }
 
     public boolean isValid(){
-        if(this.foto != null && this.bairro != null){
+        if(this.fotoBase64 != null && this.bairro != null){
             return true;
         }
         return false;
@@ -39,7 +39,6 @@ public class AchadosDTO {
         achados.setComentario(this.comentario);
         achados.setBairro(this.bairro);
         achados.setDateOcorrencia(new Date());
-        achados.setFoto(this.foto);
         achados.setNome(this.nome);
         achados.setId(this.id);
         return achados;
@@ -53,12 +52,12 @@ public class AchadosDTO {
         this.id = id;
     }
 
-    public String getFoto() {
-        return foto;
+    public String getFotoBase64() {
+        return fotoBase64;
     }
 
-    public void setFoto(String foto) {
-        this.foto = foto;
+    public void setFotoBase64(String fotoBase64) {
+        this.fotoBase64 = fotoBase64;
     }
 
     public String getBairro() {

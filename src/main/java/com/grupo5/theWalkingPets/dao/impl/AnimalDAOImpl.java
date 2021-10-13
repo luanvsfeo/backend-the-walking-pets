@@ -23,7 +23,17 @@ public class AnimalDAOImpl implements AnimalDAO {
 
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
         //inner join usuario on usuario.id = animal.usuario_id
-        StringBuilder SQL = new StringBuilder(" select * from animal where doar = true and perdido = false ");
+        StringBuilder SQL = new StringBuilder(" select * from animal where 1 = 1 ");
+
+        if(animalFilter.getPerdido() != null){
+            SQL.append(" and perdido = :campoPerdido ");
+            namedParameters.addValue("campoPerdido", animalFilter.getPerdido());
+        }
+
+        if(animalFilter.getDoar() != null){
+            SQL.append(" and doar = :campoDoar ");
+            namedParameters.addValue("campoDoar", animalFilter.getDoar());
+        }
 
         if(animalFilter.getEspecie() != null){
             SQL.append(" and especie = :campoEspecie ");

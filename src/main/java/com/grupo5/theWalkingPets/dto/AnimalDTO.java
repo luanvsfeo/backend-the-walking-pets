@@ -1,12 +1,15 @@
 package com.grupo5.theWalkingPets.dto;
 
 import com.grupo5.theWalkingPets.entity.Animal;
+import com.grupo5.theWalkingPets.entity.Foto;
 import com.grupo5.theWalkingPets.entity.Usuario;
 import com.grupo5.theWalkingPets.enumx.Especie;
 import com.grupo5.theWalkingPets.enumx.Porte;
 import com.grupo5.theWalkingPets.enumx.Sexo;
 import com.grupo5.theWalkingPets.enumx.Temperamento;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 public class AnimalDTO {
 
@@ -23,7 +26,10 @@ public class AnimalDTO {
     private boolean vacinado;
     private boolean perdido;
     private String anilha;
-    private MultipartFile foto; // objeto dedicado depois
+    private MultipartFile foto;
+
+
+    private String fotoBase64;
 
     //dados vindos do dono
     private String bairro;
@@ -190,7 +196,15 @@ public class AnimalDTO {
         this.cidade = cidade;
     }
 
-    public Animal converterToAnimal(Usuario usuario){
+    public String getFotoBase64() {
+        return fotoBase64;
+    }
+
+    public void setFotoBase64(String fotoBase64) {
+        this.fotoBase64 = fotoBase64;
+    }
+
+    public Animal converterToAnimal(Usuario usuario) throws IOException {
         Animal animal = new Animal();
         animal.setAnilha(this.anilha);
         animal.setCastrado(this.castrado);
@@ -206,7 +220,7 @@ public class AnimalDTO {
         animal.setPelagem(this.pelagem);
         animal.setDoar(true);
 
-        //animal.setFoto(this.foto); base64 ?
+        animal.setFoto(new Foto(this.foto.getOriginalFilename(),this.foto.getContentType(),this.foto.getBytes()));
         animal.setUsuario(usuario);
 
 

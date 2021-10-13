@@ -21,7 +21,8 @@ public class AnimalFilter {
     private Long usuarioId;
     private String cidade;
     private String bairro;
-
+    private Boolean doar;
+    private Boolean perdido;
 
     public AnimalFilter() {
     }
@@ -166,5 +167,21 @@ public class AnimalFilter {
 
     public void setBairro(String bairro) {
         this.bairro = bairro;
+    }
+
+    public Boolean getDoar() {
+        return doar;
+    }
+
+    public void setDoar(Boolean doar) {
+        this.doar = doar;
+    }
+
+    public Boolean getPerdido() {
+        return perdido;
+    }
+
+    public void setPerdido(Boolean perdido) {
+        this.perdido = perdido;
     }
 }

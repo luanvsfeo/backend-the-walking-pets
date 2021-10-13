@@ -5,6 +5,7 @@ import com.grupo5.theWalkingPets.enumx.Especie;
 import com.grupo5.theWalkingPets.enumx.Porte;
 import com.grupo5.theWalkingPets.enumx.Sexo;
 import com.grupo5.theWalkingPets.enumx.Temperamento;
+import org.springframework.util.Base64Utils;
 
 import javax.persistence.*;
 
@@ -59,18 +60,20 @@ public class Animal {
     @Column(name = Colunas.ANILHA)
     private String anilha;
 
-    @Column(name = Colunas.FOTO)
-    private String foto; // objeto dedicado depois
-
     @ManyToOne
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
+
+    @ManyToOne
+    @JoinColumn(name = "foto_id")
+    private Foto foto;
+
 
     public Animal() {
     }
 
 
-    public Animal(Long id, String nome, Especie especie, String raca, Sexo sexo, String idade, String pelagem, Porte porte, Temperamento temperamento, boolean castrado, boolean vacinado, boolean perdido, String anilha, String foto, Usuario usuario) {
+    public Animal(Long id, String nome, Especie especie, String raca, Sexo sexo, String idade, String pelagem, Porte porte, Temperamento temperamento, boolean castrado, boolean vacinado, boolean perdido, boolean doar, String anilha, Usuario usuario, Foto foto) {
         this.id = id;
         this.nome = nome;
         this.especie = especie;
@@ -83,9 +86,10 @@ public class Animal {
         this.castrado = castrado;
         this.vacinado = vacinado;
         this.perdido = perdido;
+        this.doar = doar;
         this.anilha = anilha;
-        this.foto = foto;
         this.usuario = usuario;
+        this.foto = foto;
     }
 
     public Long getId() {
@@ -192,11 +196,11 @@ public class Animal {
         this.anilha = anilha;
     }
 
-    public String getFoto() {
+    public Foto getFoto() {
         return foto;
     }
 
-    public void setFoto(String foto) {
+    public void setFoto(Foto foto) {
         this.foto = foto;
     }
 
@@ -233,12 +237,15 @@ public class Animal {
         animalDTO.setSexo(this.sexo);
         animalDTO.setId(this.id);
 
+        if(this.foto != null){
+            animalDTO.setFotoBase64(new String(Base64Utils.encode(this.foto.getData())));
+        }
+
         if(this.usuario.getPassword() != null){
             animalDTO.setBairro(this.usuario.getBairro());
             animalDTO.setCidade(this.usuario.getCidade());
             animalDTO.setUf(this.usuario.getUf());
         }
-
 
         return animalDTO;
     }
