@@ -15,6 +15,7 @@ import java.sql.SQLException;
 @RestController
 @RequestMapping("/animal")
 public class AnimalController {
+    // TODO - ver porque as fotos não funcionam no heroku
 
     private final AnimalService animalService;
 
