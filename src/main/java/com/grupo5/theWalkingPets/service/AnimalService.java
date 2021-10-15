@@ -7,6 +7,7 @@ import com.grupo5.theWalkingPets.entity.Usuario;
 import com.grupo5.theWalkingPets.repository.AnimalRepository;
 import com.grupo5.theWalkingPets.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.SQLException;
@@ -37,6 +38,7 @@ public class AnimalService {
         animalRepository.save(animal);
     }
 
+    @Transactional
     public List<AnimalDTO> buscarPorFiltroParaListagem(AnimalFilter animalFilter, Usuario usuario) throws SQLException {
         animalFilter.setUsuarioId(usuario.getId());
         animalFilter.setDoar(true);
@@ -53,6 +55,7 @@ public class AnimalService {
         return buscarPorFiltro(animalFilter);
     }
 
+    @Transactional
     public List<AnimalDTO> buscarMeusAnimais(Usuario usuario) throws SQLException { // provisorio
         return converterParaDTO(animalRepository.findAllByUsuario(usuario));
     }
