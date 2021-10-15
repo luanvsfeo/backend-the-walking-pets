@@ -1,7 +1,5 @@
 package com.grupo5.theWalkingPets.entity;
 
-import org.hibernate.annotations.Type;
-
 import javax.persistence.*;
 import java.sql.Blob;
 
@@ -17,7 +15,6 @@ public class Foto {
     private String type;
 
     @Lob
-   // @Type(type="org.hibernate.type.PrimitiveByteArrayBlobType")
     private Blob data;
 
     public Foto() {

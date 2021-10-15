@@ -15,7 +15,6 @@ import java.sql.SQLException;
 @RestController
 @RequestMapping("/animal")
 public class AnimalController {
-    // TODO - ver porque as fotos não funcionam no heroku
 
     private final AnimalService animalService;
 
@@ -27,7 +26,7 @@ public class AnimalController {
     }
 
     @GetMapping("/perdidos")
-    public ResponseEntity<?> perdidos(@RequestParam("coordenadas") String coordenadas, HttpServletRequest request) throws SQLException {
+    public ResponseEntity<?> perdidos(@RequestParam("coordenadas") String coordenadas, HttpServletRequest request)  {
         //TODO - mostrar apenas os animais perdidos com donos da mesma cidade e bairro
         Usuario user = usuarioService.buscarUsuarioPorToken(request.getHeader("Authorization"));
 
@@ -35,7 +34,7 @@ public class AnimalController {
     }
 
     @GetMapping("/adocao")
-    public ResponseEntity<?> listagemAdoacao(@RequestBody(required = false) AnimalFilter animalFilter, HttpServletRequest request) throws SQLException {
+    public ResponseEntity<?> listagemAdoacao(@RequestBody(required = false) AnimalFilter animalFilter, HttpServletRequest request)  {
         //TODO - mostrar apenas os da mesma cidade ?
         Usuario user = usuarioService.buscarUsuarioPorToken(request.getHeader("Authorization"));
         return ResponseEntity.ok().body(animalService.buscarPorFiltroParaListagem(animalFilter, user));
@@ -48,14 +47,14 @@ public class AnimalController {
     }
 
     @GetMapping("/doacao")
-    public ResponseEntity<?> doacao(HttpServletRequest request) throws SQLException {
+    public ResponseEntity<?> doacao(HttpServletRequest request)  {
 
         Usuario user = usuarioService.buscarUsuarioPorToken(request.getHeader("Authorization"));
         return ResponseEntity.ok().body(animalService.buscarMeusAnimais(user));
     }
 
     @GetMapping("/doacao/pedidos")
-    public ResponseEntity<?> listagemPedidosDeAdocao(HttpServletRequest request) throws SQLException {
+    public ResponseEntity<?> listagemPedidosDeAdocao(HttpServletRequest request)  {
         //TODO - Listagem dos pedidos de adoção para meus animais
 
         Usuario user = usuarioService.buscarUsuarioPorToken(request.getHeader("Authorization"));

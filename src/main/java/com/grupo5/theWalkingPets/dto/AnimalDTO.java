@@ -221,9 +221,11 @@ public class AnimalDTO {
         animal.setPelagem(this.pelagem);
         animal.setDoar(true);
 
-        animal.setFoto(new Foto(this.foto.getOriginalFilename(),this.foto.getContentType(), BlobProxy.generateProxy(this.foto.getBytes())));
-        animal.setUsuario(usuario);
+        if(this.foto != null){
+            animal.setFoto(new Foto(this.foto.getOriginalFilename(),this.foto.getContentType(), BlobProxy.generateProxy(this.foto.getBytes())));
+        }
 
+        animal.setUsuario(usuario);
 
         return animal;
     }

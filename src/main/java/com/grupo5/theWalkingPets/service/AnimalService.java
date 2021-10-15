@@ -39,7 +39,7 @@ public class AnimalService {
     }
 
     @Transactional
-    public List<AnimalDTO> buscarPorFiltroParaListagem(AnimalFilter animalFilter, Usuario usuario) throws SQLException {
+    public List<AnimalDTO> buscarPorFiltroParaListagem(AnimalFilter animalFilter, Usuario usuario)  {
         animalFilter.setUsuarioId(usuario.getId());
         animalFilter.setDoar(true);
         animalFilter.setPerdido(false);
@@ -47,7 +47,7 @@ public class AnimalService {
         return buscarPorFiltro(animalFilter);
     }
 
-    public List<AnimalDTO> buscarPerdidos(Usuario usuario) throws SQLException { //provisorio
+    public List<AnimalDTO> buscarPerdidos(Usuario usuario)  { //provisorio
         AnimalFilter animalFilter = new AnimalFilter();
         animalFilter.setPerdido(true);
         animalFilter.setUsuarioId(usuario.getId());
@@ -56,22 +56,28 @@ public class AnimalService {
     }
 
     @Transactional
-    public List<AnimalDTO> buscarMeusAnimais(Usuario usuario) throws SQLException { // provisorio
+    public List<AnimalDTO> buscarMeusAnimais(Usuario usuario)  { // provisorio
         return converterParaDTO(animalRepository.findAllByUsuario(usuario));
     }
 
-    private List<AnimalDTO> buscarPorFiltro(AnimalFilter animalFilter) throws SQLException {
+    private List<AnimalDTO> buscarPorFiltro(AnimalFilter animalFilter) {
         return converterParaDTO(animalRepository.buscarPorFiltros(animalFilter));
     }
 
-    private List<AnimalDTO> converterParaDTO(List<Animal> animals) throws SQLException {
-        List<AnimalDTO> animalDTOS = new ArrayList<>();
+    private List<AnimalDTO> converterParaDTO(List<Animal> animals)  {
 
-        for (Animal animal : animals) {
-            animal.setUsuario(usuarioRepository.findById(animal.getUsuario().getId()).orElse(null));
-            animalDTOS.add(animal.converterParaDTO());
+        try{
+            List<AnimalDTO> animalDTOS = new ArrayList<>();
+
+            for (Animal animal : animals) {
+                animal.setUsuario(usuarioRepository.findById(animal.getUsuario().getId()).orElse(null));
+                animalDTOS.add(animal.converterParaDTO());
+            }
+            return animalDTOS;
+        }catch (SQLException e){
+            return null ;
         }
-        return animalDTOS;
+
     }
 
 //    public class CustomerSpecs {

@@ -20,7 +20,7 @@ public class AchadosController {
     }
 
     @GetMapping
-    public ResponseEntity<?> listagem() throws SQLException {
+    public ResponseEntity<?> listagem() {
           // TODO - Listagem com base na cidade atual
         return ResponseEntity.ok(achadosService.buscarTodos());
     }

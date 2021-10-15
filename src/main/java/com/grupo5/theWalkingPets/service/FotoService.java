@@ -30,11 +30,11 @@ public class FotoService {
         try {
             fileDB = new Foto(fileName, file.getContentType(), BlobProxy.generateProxy(file.getBytes()));
 
+            return fotoRepository.save(fileDB);
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         }
-
-        return fotoRepository.save(fileDB);
     }
 
     public Foto buscarPorId(Long id) {

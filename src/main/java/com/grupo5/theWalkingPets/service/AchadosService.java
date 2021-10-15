@@ -27,17 +27,22 @@ public class AchadosService {
         achadosRepository.save(achados);
     }
 
-    public List<AchadosDTO> buscarTodos() throws SQLException {
+    public List<AchadosDTO> buscarTodos() {
         return converterParaDTO(achadosRepository.findAll());
     }
 
-    private List<AchadosDTO> converterParaDTO(List<Achados> achados) throws SQLException {
-        List<AchadosDTO> achadosDTOS =  new ArrayList<>();
+    private List<AchadosDTO> converterParaDTO(List<Achados> achados) {
+        try{
+            List<AchadosDTO> achadosDTOS =  new ArrayList<>();
 
-        for(Achados achado :achados){
-            achadosDTOS.add(achado.converterParaDTO());
+            for(Achados achado :achados){
+                achadosDTOS.add(achado.converterParaDTO());
+            }
+
+            return achadosDTOS;
+        }catch (SQLException e){
+            return null;
         }
 
-        return achadosDTOS;
     }
 }
