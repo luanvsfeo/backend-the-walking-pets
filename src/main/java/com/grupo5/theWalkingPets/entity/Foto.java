@@ -13,7 +13,7 @@ public class Foto {
 
     private String type;
 
-    @Lob
+//    @Lob
     private byte[] data;
 
     public Foto() {

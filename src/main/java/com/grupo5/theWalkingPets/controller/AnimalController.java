@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 @RequestMapping("/animal")
 public class AnimalController {
+    // TODO - ver porque as fotos não funcionam no heroku
 
     private final AnimalService animalService;
 
