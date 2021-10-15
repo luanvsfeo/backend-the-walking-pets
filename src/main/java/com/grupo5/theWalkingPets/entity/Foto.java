@@ -1,6 +1,9 @@
 package com.grupo5.theWalkingPets.entity;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
+import java.sql.Blob;
 
 @Entity
 public class Foto {
@@ -14,18 +17,19 @@ public class Foto {
     private String type;
 
     @Lob
-    private byte[] data;
+   // @Type(type="org.hibernate.type.PrimitiveByteArrayBlobType")
+    private Blob data;
 
     public Foto() {
     }
 
-    public Foto(String name, String type, byte[] data) {
+    public Foto(String name, String type, Blob data) {
         this.name = name;
         this.type = type;
         this.data = data;
     }
 
-    public Foto(Long id, String name, String type, byte[] data) {
+    public Foto(Long id, String name, String type, Blob data) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -56,11 +60,11 @@ public class Foto {
         this.type = type;
     }
 
-    public byte[] getData() {
+    public Blob getData() {
         return data;
     }
 
-    public void setData(byte[] data) {
+    public void setData(Blob data) {
         this.data = data;
     }
 }

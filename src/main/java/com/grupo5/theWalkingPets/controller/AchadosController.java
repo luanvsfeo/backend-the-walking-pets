@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.sql.SQLException;
+
 @RestController
 @RequestMapping("/achados")
 public class AchadosController {
@@ -18,7 +20,7 @@ public class AchadosController {
     }
 
     @GetMapping
-    public ResponseEntity<?> listagem() {
+    public ResponseEntity<?> listagem() throws SQLException {
           // TODO - Listagem com base na cidade atual
         return ResponseEntity.ok(achadosService.buscarTodos());
     }

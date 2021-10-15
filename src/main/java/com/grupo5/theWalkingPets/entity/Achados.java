@@ -4,6 +4,7 @@ import com.grupo5.theWalkingPets.dto.AchadosDTO;
 import org.springframework.util.Base64Utils;
 
 import javax.persistence.*;
+import java.sql.SQLException;
 import java.util.Date;
 
 @Entity
@@ -105,7 +106,7 @@ public class Achados {
         this.foto = foto;
     }
 
-    public AchadosDTO converterParaDTO() {
+    public AchadosDTO converterParaDTO() throws SQLException {
         AchadosDTO achadosDTO = new AchadosDTO();
         achadosDTO.setComentario(this.comentario);
         achadosDTO.setNome(this.nome);
@@ -113,7 +114,8 @@ public class Achados {
         achadosDTO.setId(this.id);
 
         if(this.foto != null){
-            achadosDTO.setFotoBase64(new String(Base64Utils.encode(this.foto.getData())));
+            int blobLength = (int) this.foto.getData().length();
+            achadosDTO.setFotoBase64(new String(Base64Utils.encode(this.foto.getData().getBytes(1, blobLength))));
         }
 
         return achadosDTO;

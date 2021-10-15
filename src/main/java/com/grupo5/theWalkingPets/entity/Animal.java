@@ -8,6 +8,7 @@ import com.grupo5.theWalkingPets.enumx.Temperamento;
 import org.springframework.util.Base64Utils;
 
 import javax.persistence.*;
+import java.sql.SQLException;
 
 @Entity
 public class Animal {
@@ -220,7 +221,7 @@ public class Animal {
         this.usuario = usuario;
     }
 
-    public AnimalDTO converterParaDTO(){
+    public AnimalDTO converterParaDTO() throws SQLException {
         AnimalDTO animalDTO = new AnimalDTO();
         animalDTO.setAnilha(this.anilha);
         animalDTO.setCastrado(this.castrado);
@@ -238,7 +239,8 @@ public class Animal {
         animalDTO.setId(this.id);
 
         if(this.foto != null){
-            animalDTO.setFotoBase64(new String(Base64Utils.encode(this.foto.getData())));
+            int blobLength = (int) this.foto.getData().length();
+            animalDTO.setFotoBase64(new String(Base64Utils.encode(this.foto.getData().getBytes(1, blobLength))));
         }
 
         if(this.usuario.getPassword() != null){

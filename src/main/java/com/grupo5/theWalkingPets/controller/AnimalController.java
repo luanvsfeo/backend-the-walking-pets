@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
+import java.sql.SQLException;
 
 @RestController
 @RequestMapping("/animal")
@@ -25,7 +26,7 @@ public class AnimalController {
     }
 
     @GetMapping("/perdidos")
-    public ResponseEntity<?> perdidos(@RequestParam("coordenadas") String coordenadas, HttpServletRequest request) {
+    public ResponseEntity<?> perdidos(@RequestParam("coordenadas") String coordenadas, HttpServletRequest request) throws SQLException {
         //TODO - mostrar apenas os animais perdidos com donos da mesma cidade e bairro
         Usuario user = usuarioService.buscarUsuarioPorToken(request.getHeader("Authorization"));
 
@@ -33,7 +34,7 @@ public class AnimalController {
     }
 
     @GetMapping("/adocao")
-    public ResponseEntity<?> listagemAdoacao(@RequestBody(required = false) AnimalFilter animalFilter, HttpServletRequest request) {
+    public ResponseEntity<?> listagemAdoacao(@RequestBody(required = false) AnimalFilter animalFilter, HttpServletRequest request) throws SQLException {
         //TODO - mostrar apenas os da mesma cidade ?
         Usuario user = usuarioService.buscarUsuarioPorToken(request.getHeader("Authorization"));
         return ResponseEntity.ok().body(animalService.buscarPorFiltroParaListagem(animalFilter, user));
@@ -46,14 +47,14 @@ public class AnimalController {
     }
 
     @GetMapping("/doacao")
-    public ResponseEntity<?> doacao(HttpServletRequest request) {
+    public ResponseEntity<?> doacao(HttpServletRequest request) throws SQLException {
 
         Usuario user = usuarioService.buscarUsuarioPorToken(request.getHeader("Authorization"));
         return ResponseEntity.ok().body(animalService.buscarMeusAnimais(user));
     }
 
     @GetMapping("/doacao/pedidos")
-    public ResponseEntity<?> listagemPedidosDeAdocao(HttpServletRequest request) {
+    public ResponseEntity<?> listagemPedidosDeAdocao(HttpServletRequest request) throws SQLException {
         //TODO - Listagem dos pedidos de adoção para meus animais
 
         Usuario user = usuarioService.buscarUsuarioPorToken(request.getHeader("Authorization"));

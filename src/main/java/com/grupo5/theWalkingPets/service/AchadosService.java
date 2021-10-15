@@ -6,6 +6,7 @@ import com.grupo5.theWalkingPets.repository.AchadosRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,11 +27,11 @@ public class AchadosService {
         achadosRepository.save(achados);
     }
 
-    public List<AchadosDTO> buscarTodos(){
+    public List<AchadosDTO> buscarTodos() throws SQLException {
         return converterParaDTO(achadosRepository.findAll());
     }
 
-    private List<AchadosDTO> converterParaDTO(List<Achados> achados){
+    private List<AchadosDTO> converterParaDTO(List<Achados> achados) throws SQLException {
         List<AchadosDTO> achadosDTOS =  new ArrayList<>();
 
         for(Achados achado :achados){

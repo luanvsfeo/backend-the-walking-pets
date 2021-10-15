@@ -9,6 +9,7 @@ import com.grupo5.theWalkingPets.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class AnimalService {
         animalRepository.save(animal);
     }
 
-    public List<AnimalDTO> buscarPorFiltroParaListagem(AnimalFilter animalFilter, Usuario usuario) {
+    public List<AnimalDTO> buscarPorFiltroParaListagem(AnimalFilter animalFilter, Usuario usuario) throws SQLException {
         animalFilter.setUsuarioId(usuario.getId());
         animalFilter.setDoar(true);
         animalFilter.setPerdido(false);
@@ -44,7 +45,7 @@ public class AnimalService {
         return buscarPorFiltro(animalFilter);
     }
 
-    public List<AnimalDTO> buscarPerdidos(Usuario usuario) { //provisorio
+    public List<AnimalDTO> buscarPerdidos(Usuario usuario) throws SQLException { //provisorio
         AnimalFilter animalFilter = new AnimalFilter();
         animalFilter.setPerdido(true);
         animalFilter.setUsuarioId(usuario.getId());
@@ -52,15 +53,15 @@ public class AnimalService {
         return buscarPorFiltro(animalFilter);
     }
 
-    public List<AnimalDTO> buscarMeusAnimais(Usuario usuario) { // provisorio
+    public List<AnimalDTO> buscarMeusAnimais(Usuario usuario) throws SQLException { // provisorio
         return converterParaDTO(animalRepository.findAllByUsuario(usuario));
     }
 
-    private List<AnimalDTO> buscarPorFiltro(AnimalFilter animalFilter){
+    private List<AnimalDTO> buscarPorFiltro(AnimalFilter animalFilter) throws SQLException {
         return converterParaDTO(animalRepository.buscarPorFiltros(animalFilter));
     }
 
-    private List<AnimalDTO> converterParaDTO(List<Animal> animals) {
+    private List<AnimalDTO> converterParaDTO(List<Animal> animals) throws SQLException {
         List<AnimalDTO> animalDTOS = new ArrayList<>();
 
         for (Animal animal : animals) {

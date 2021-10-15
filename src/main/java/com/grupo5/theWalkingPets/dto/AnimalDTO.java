@@ -7,6 +7,7 @@ import com.grupo5.theWalkingPets.enumx.Especie;
 import com.grupo5.theWalkingPets.enumx.Porte;
 import com.grupo5.theWalkingPets.enumx.Sexo;
 import com.grupo5.theWalkingPets.enumx.Temperamento;
+import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -220,7 +221,7 @@ public class AnimalDTO {
         animal.setPelagem(this.pelagem);
         animal.setDoar(true);
 
-        animal.setFoto(new Foto(this.foto.getOriginalFilename(),this.foto.getContentType(),this.foto.getBytes()));
+        animal.setFoto(new Foto(this.foto.getOriginalFilename(),this.foto.getContentType(), BlobProxy.generateProxy(this.foto.getBytes())));
         animal.setUsuario(usuario);
 
 
