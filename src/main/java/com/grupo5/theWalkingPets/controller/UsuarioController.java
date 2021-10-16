@@ -37,7 +37,8 @@ public class UsuarioController {
                 return ResponseEntity.badRequest().body("Cep invalido");
             }
 
-            if (usuarioService.criarUsuarioPessoaFisica(usuarioDTO.converterParaUsuarioComLocalizacao(response.getBody())) == null) {
+            // TODO - Incluir criação de usuario pessoa juridica
+            if (usuarioService.criarUsuario(usuarioDTO, response.getBody()) == null) {
                 return ResponseEntity.badRequest().body("Email ja existente");
             }
 
@@ -60,7 +61,6 @@ public class UsuarioController {
         }
 
         // redirecionar para endpoint get de animais ou get inicial de usuario com o header de authorization(front ou back ?)
-
     }
 
 
@@ -68,7 +68,6 @@ public class UsuarioController {
     public ResponseEntity<?> verificar() {
         //Procurar serviço gratis de envio de email ?
         // TODO - altera a flag de verificado para true
-
 
         return ResponseEntity.ok("");
     }
@@ -78,7 +77,6 @@ public class UsuarioController {
     public ResponseEntity<?> inicio() {
         //PRECISA DE AUTHORIZATION
         // telas iniciais do app ?
-
         return ResponseEntity.ok("foi meu nobre");
     }
 }

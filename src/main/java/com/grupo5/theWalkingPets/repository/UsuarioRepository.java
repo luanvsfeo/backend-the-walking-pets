@@ -3,6 +3,7 @@ package com.grupo5.theWalkingPets.repository;
 import com.grupo5.theWalkingPets.entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import java.util.List;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario,Long> {
@@ -10,4 +11,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario,Long> {
     boolean existsByEmail(String email);
 
     Usuario findByEmail(String email);
+
+    List<Usuario> findAllByCidade(String cidade);
 }

@@ -9,6 +9,7 @@ public class UsuarioDTO {
     private String senha;
     private String cep;
     private String telefone;
+    private String tipo;
 
     public UsuarioDTO(String nome, String email, String senha, String cep, String telefone) {
         this.nome = nome;
@@ -26,6 +27,7 @@ public class UsuarioDTO {
                 this.email != null &&
                 this.senha != null &&
                 this.cep != null &&
+                this.tipo != null &&
                 this.telefone != null;
     }
 
@@ -80,4 +82,11 @@ public class UsuarioDTO {
         this.telefone = telefone;
     }
 
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
 }

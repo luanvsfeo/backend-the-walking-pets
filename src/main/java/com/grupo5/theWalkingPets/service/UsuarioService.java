@@ -1,5 +1,7 @@
 package com.grupo5.theWalkingPets.service;
 
+import com.grupo5.theWalkingPets.dto.UsuarioDTO;
+import com.grupo5.theWalkingPets.dto.ViaCepDTO;
 import com.grupo5.theWalkingPets.entity.Permissao;
 import com.grupo5.theWalkingPets.entity.Usuario;
 import com.grupo5.theWalkingPets.repository.PermissaoRepository;
@@ -9,9 +11,8 @@ import com.grupo5.theWalkingPets.util.JwtTokenUtil;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
-
-import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 @Service
 public class UsuarioService {
@@ -24,6 +25,8 @@ public class UsuarioService {
 
     final String PERMISAO_PESSOA_FISICA = "PESSOA_FISICA";
 
+    final String PERMISAO_PESSOA_JURIDICA = "PESSOA_JURIDICA";
+
     public UsuarioService(UsuarioRepository usuarioRepository, PermissaoRepository permissaoRepository, JwtTokenUtil jwtTokenUtil) {
         this.usuarioRepository = usuarioRepository;
         this.permissaoRepository = permissaoRepository;
@@ -34,9 +37,28 @@ public class UsuarioService {
         return !usuarioRepository.existsByEmail(usuario.getEmail());
     }
 
-    public Usuario criarUsuarioPessoaFisica(Usuario usuario) {
-        usuario.setPermissoes(Arrays.asList(permissaoRepository.findByNome(PERMISAO_PESSOA_FISICA)));
+    public Usuario criarUsuario(UsuarioDTO usuario, ViaCepDTO viaCepDTO){
+        if(usuario.getTipo().equals(PERMISAO_PESSOA_FISICA)){
+            return criarUsuarioPessoaFisica(usuario.converterParaUsuarioComLocalizacao(viaCepDTO));
+        }else if (usuario.getTipo().equals(PERMISAO_PESSOA_JURIDICA)){
+            return criarUsuarioPessoaJuridica(usuario.converterParaUsuarioComLocalizacao(viaCepDTO));
+        }
+        return null;
+    }
+
+
+    private Usuario criarUsuarioPessoaJuridica(Usuario usuario) {
+        usuario.setPermissoes(Collections.singletonList(permissaoRepository.findByNome(PERMISAO_PESSOA_FISICA)));
         return criar(usuario);
+    }
+
+    private Usuario criarUsuarioPessoaFisica(Usuario usuario) {
+        usuario.setPermissoes(Collections.singletonList(permissaoRepository.findByNome(PERMISAO_PESSOA_FISICA)));
+        return criar(usuario);
+    }
+
+    public List<Usuario> buscarUsuariosJuridicosPorCidade(String cidade){
+        return usuarioRepository.findAllByCidade(cidade);
     }
 
     private Usuario criar(Usuario usuario) {
@@ -70,12 +92,12 @@ public class UsuarioService {
 
         if (usuarioRepository.count() == 0) {
 
-
             final String PERMISAO_ADMIN = "ADMIN";
 
             Permissao permissionAdm = permissaoRepository.save(new Permissao(PERMISAO_ADMIN));
 
             permissaoRepository.save(new Permissao(PERMISAO_PESSOA_FISICA));
+            permissaoRepository.save(new Permissao(PERMISAO_PESSOA_JURIDICA));
 
             Usuario user = new Usuario();
             user.setEmail("admin");
