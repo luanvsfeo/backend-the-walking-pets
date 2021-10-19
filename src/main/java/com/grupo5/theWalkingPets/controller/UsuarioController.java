@@ -6,7 +6,6 @@ import com.grupo5.theWalkingPets.service.UsuarioService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
-
 import java.util.Objects;
 
 @RestController
@@ -37,7 +36,6 @@ public class UsuarioController {
                 return ResponseEntity.badRequest().body("Cep invalido");
             }
 
-            // TODO - Incluir criação de usuario pessoa juridica
             if (usuarioService.criarUsuario(usuarioDTO, response.getBody()) == null) {
                 return ResponseEntity.badRequest().body("Email ja existente");
             }
@@ -72,11 +70,4 @@ public class UsuarioController {
         return ResponseEntity.ok("");
     }
 
-
-    @GetMapping("/primeiros-passos")
-    public ResponseEntity<?> inicio() {
-        //PRECISA DE AUTHORIZATION
-        // telas iniciais do app ?
-        return ResponseEntity.ok("foi meu nobre");
-    }
 }

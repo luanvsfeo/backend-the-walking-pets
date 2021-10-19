@@ -7,8 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.sql.SQLException;
-
 @RestController
 @RequestMapping("/achados")
 public class AchadosController {
@@ -20,13 +18,13 @@ public class AchadosController {
     }
 
     @GetMapping
-    public ResponseEntity<?> listagem() {
+    public ResponseEntity<?> listagemPorCidade(String cidade) {
           // TODO - Listagem com base na cidade atual
-        return ResponseEntity.ok(achadosService.buscarTodos());
+        return ResponseEntity.ok(achadosService.buscarPorCidade(cidade));
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> criacao(@RequestParam("foto")MultipartFile foto, AchadosDTO achadosDTO) {
+    public ResponseEntity<?> criacao(@RequestParam("foto") MultipartFile foto, AchadosDTO achadosDTO) {
 
         if(!achadosDTO.isValid()){
             return ResponseEntity.badRequest().body("Campo faltante");

@@ -27,8 +27,8 @@ public class AchadosService {
         achadosRepository.save(achados);
     }
 
-    public List<AchadosDTO> buscarTodos() {
-        return converterParaDTO(achadosRepository.findAll());
+    public List<AchadosDTO> buscarPorCidade(String cidade) {
+        return converterParaDTO(achadosRepository.findAllByCidade(cidade));
     }
 
     private List<AchadosDTO> converterParaDTO(List<Achados> achados) {

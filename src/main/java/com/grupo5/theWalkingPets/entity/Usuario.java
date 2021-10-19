@@ -1,5 +1,6 @@
 package com.grupo5.theWalkingPets.entity;
 
+import com.grupo5.theWalkingPets.dto.UsuarioDTO;
 import com.grupo5.theWalkingPets.dto.ViaCepDTO;
 import com.grupo5.theWalkingPets.util.ConversaoUtil;
 import org.hibernate.annotations.LazyCollection;
@@ -194,6 +195,16 @@ public class Usuario implements UserDetails {
         this.cidade = viaCepDTO.getLocalidade();
         this.cep = viaCepDTO.getCep().replace("-","");
         this.uf = viaCepDTO.getUf();
+    }
+
+    public UsuarioDTO converterParaDTO(){
+       UsuarioDTO usuarioDTO = new UsuarioDTO();
+       usuarioDTO.setNome(this.nome);
+        usuarioDTO.setCoordenadas(this.coordenadas);
+        usuarioDTO.setTelefone(this.telefone);
+        usuarioDTO.setCep(this.cep);
+
+       return usuarioDTO;
     }
 
     public Collection<Permissao> getPermissoes() {

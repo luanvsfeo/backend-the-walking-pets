@@ -10,6 +10,7 @@ public class UsuarioDTO {
     private String cep;
     private String telefone;
     private String tipo;
+    private String coordenadas;
 
     public UsuarioDTO(String nome, String email, String senha, String cep, String telefone) {
         this.nome = nome;
@@ -88,5 +89,13 @@ public class UsuarioDTO {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    public String getCoordenadas() {
+        return coordenadas;
+    }
+
+    public void setCoordenadas(String coordenadas) {
+        this.coordenadas = coordenadas;
     }
 }

@@ -11,6 +11,7 @@ import com.grupo5.theWalkingPets.util.JwtTokenUtil;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -57,8 +58,18 @@ public class UsuarioService {
         return criar(usuario);
     }
 
-    public List<Usuario> buscarUsuariosJuridicosPorCidade(String cidade){
-        return usuarioRepository.findAllByCidade(cidade);
+    public List<UsuarioDTO> buscarUsuariosJuridicosPorCidade(String cidade){
+        return converterParaDTO(usuarioRepository.findAllByCidade(cidade));
+    }
+
+    private List<UsuarioDTO> converterParaDTO(List<Usuario> usuarios){
+        List<UsuarioDTO> usuarioDTOS = new ArrayList<>();
+
+        for(Usuario usuario : usuarios){
+            usuarioDTOS.add(usuario.converterParaDTO());
+        }
+
+        return usuarioDTOS;
     }
 
     private Usuario criar(Usuario usuario) {
