@@ -38,7 +38,7 @@ public class FotoService {
     }
 
     public Foto buscarPorId(Long id) {
-        return fotoRepository.findById(id).get();
+        return fotoRepository.findById(id).orElse(null);
     }
 
     public Stream<Foto> buscarTodos() {

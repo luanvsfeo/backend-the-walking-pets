@@ -40,6 +40,11 @@ public class AnimalService {
 
     @Transactional
     public List<AnimalDTO> buscarPorFiltroParaListagem(AnimalFilter animalFilter, Usuario usuario)  {
+
+        if (animalFilter == null){
+            animalFilter =  new AnimalFilter();
+        }
+
         animalFilter.setUsuarioId(usuario.getId());
         animalFilter.setDoar(true);
         animalFilter.setPerdido(false);
@@ -71,6 +76,7 @@ public class AnimalService {
 
             for (Animal animal : animals) {
                 animal.setUsuario(usuarioRepository.findById(animal.getUsuario().getId()).orElse(null));
+                animal.setFoto(fotoService.buscarPorId(animal.getFoto().getId()));
                 animalDTOS.add(animal.converterParaDTO());
             }
             return animalDTOS;

@@ -1,6 +1,7 @@
 package com.grupo5.theWalkingPets.dao.rowMapper;
 
 import com.grupo5.theWalkingPets.entity.Animal;
+import com.grupo5.theWalkingPets.entity.Foto;
 import com.grupo5.theWalkingPets.entity.Usuario;
 import com.grupo5.theWalkingPets.enumx.Especie;
 import com.grupo5.theWalkingPets.enumx.Porte;
@@ -32,7 +33,8 @@ public class AnimalRowMapper implements RowMapper<Animal> {
         animal.setIdade(resultSet.getString(Animal.Colunas.IDADE));
         animal.setEspecie(Especie.valueOf(String.valueOf(resultSet.getString(Animal.Colunas.ESPECIE))));
         animal.setCastrado(resultSet.getBoolean(Animal.Colunas.CASTRADO));
-        //animal.setFoto();
+        animal.setFoto(new Foto(resultSet.getLong("foto_id")));
+
         return animal;
     }
 }

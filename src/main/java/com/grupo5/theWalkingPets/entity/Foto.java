@@ -20,6 +20,10 @@ public class Foto {
     public Foto() {
     }
 
+    public Foto(Long id) {
+        this.id = id;
+    }
+
     public Foto(String name, String type, Blob data) {
         this.name = name;
         this.type = type;
