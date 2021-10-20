@@ -65,6 +65,10 @@ public class AnimalController {
     public ResponseEntity<?> cadastro(@RequestParam("foto") MultipartFile foto, AnimalDTO animalDTO, HttpServletRequest request) {
         try {
 
+            if(!animalDTO.isValid()){
+                return ResponseEntity.badRequest().body("Faltam dados para cadastro do animal");
+            }
+
             Usuario user = usuarioService.buscarUsuarioPorToken(request.getHeader("Authorization"));
             animalService.salvar(animalDTO.converterToAnimal(user),foto);
 
