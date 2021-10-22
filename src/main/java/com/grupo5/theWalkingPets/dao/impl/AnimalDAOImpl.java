@@ -41,13 +41,13 @@ public class AnimalDAOImpl implements AnimalDAO {
         }
 
         if(animalFilter.getAnilha() != null){
-            SQL.append(" and anilha like CONCAT('%',:campoAnilha,'%') ");
-            namedParameters.addValue("campoAnilha", animalFilter.getAnilha());
+            SQL.append(" and lower(anilha) like CONCAT('%',:campoAnilha,'%') ");
+            namedParameters.addValue("campoAnilha", animalFilter.getAnilha().toLowerCase());
         }
 
         if(animalFilter.getNome() != null){
-            SQL.append(" and nome like CONCAT('%',:campoNome,'%') ");
-            namedParameters.addValue("campoNome", animalFilter.getNome());
+            SQL.append(" and lower(nome) like CONCAT('%',:campoNome,'%') ");
+            namedParameters.addValue("campoNome", animalFilter.getNome().toLowerCase());
         }
 
         if(animalFilter.getIdade() != null){
@@ -63,6 +63,11 @@ public class AnimalDAOImpl implements AnimalDAO {
         if(animalFilter.getTemperamento() != null){
             SQL.append(" and temperamento = :campoTemperamento ");
             namedParameters.addValue("campoTemperamento", animalFilter.getTemperamento().name());
+        }
+
+        if(animalFilter.getSexo() != null){
+            SQL.append(" and sexo = :campoSexo ");
+            namedParameters.addValue("campoSexo", animalFilter.getSexo().name());
         }
 
         if(animalFilter.getUsuarioId() != null){

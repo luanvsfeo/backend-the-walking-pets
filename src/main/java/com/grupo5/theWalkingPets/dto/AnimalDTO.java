@@ -207,7 +207,11 @@ public class AnimalDTO {
 
 
     public boolean isValid(){
-        return this.anilha != null && this.nome != null && this.raca != null && this.idade != null && this.pelagem != null && this.porte != null && this.temperamento != null && this.especie != null ;
+        return this.anilha != null && this.nome != null
+                && this.raca != null && this.idade != null
+                && this.pelagem != null && this.porte != null
+                && this.temperamento != null && this.sexo != null
+                && this.especie != null ;
     }
 
     public Animal converterToAnimal(Usuario usuario) throws IOException {

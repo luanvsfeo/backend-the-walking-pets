@@ -28,7 +28,7 @@ public class AchadosDTO {
     }
 
     public boolean isValid(){
-        if(this.fotoBase64 != null && this.bairro != null){
+        if(this.nome != null && this.comentario != null){
             return true;
         }
         return false;
