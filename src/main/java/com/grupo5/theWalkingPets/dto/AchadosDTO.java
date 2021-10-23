@@ -16,6 +16,10 @@ public class AchadosDTO {
 
     private String nome;
 
+    private String telefone;
+
+    private Boolean mostrarTelefone;
+
     public AchadosDTO() {
     }
 
@@ -28,7 +32,7 @@ public class AchadosDTO {
     }
 
     public boolean isValid(){
-        if(this.nome != null && this.comentario != null){
+        if(this.nome != null && this.comentario != null && this.mostrarTelefone != null){
             return true;
         }
         return false;
@@ -41,6 +45,7 @@ public class AchadosDTO {
         achados.setDateOcorrencia(new Date());
         achados.setNome(this.nome);
         achados.setId(this.id);
+        achados.setMostrarTelefone(this.mostrarTelefone);
         return achados;
     }
 
@@ -82,5 +87,21 @@ public class AchadosDTO {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public boolean isMostrarTelefone() {
+        return mostrarTelefone;
+    }
+
+    public void setMostrarTelefone(boolean mostrarTelefone) {
+        this.mostrarTelefone = mostrarTelefone;
     }
 }

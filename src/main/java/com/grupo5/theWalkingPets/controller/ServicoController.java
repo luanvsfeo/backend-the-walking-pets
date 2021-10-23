@@ -19,6 +19,9 @@ public class ServicoController {
     @GetMapping
     public ResponseEntity<?> listagemPorCidade(String cidade){
         //TODO - buscar os serviços(usuarios - pessoa juridica da mesma cidade)
+        //TODO - Pegar localização atual - vinda do front e converter para bairro, cidade e uf ?
+
+
         return ResponseEntity.ok(usuarioService.buscarUsuariosJuridicosPorCidade(cidade));
     }
 }

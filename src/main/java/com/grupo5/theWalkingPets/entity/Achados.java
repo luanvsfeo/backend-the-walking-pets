@@ -27,6 +27,12 @@ public class Achados {
 
     private Date dateOcorrencia;
 
+    private boolean mostrarTelefone;
+
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
+
     @ManyToOne
     @JoinColumn(name = "foto_id")
     private Foto foto;
@@ -113,6 +119,10 @@ public class Achados {
         achadosDTO.setBairro(this.bairro);
         achadosDTO.setId(this.id);
 
+        if(this.mostrarTelefone){
+            achadosDTO.setTelefone(this.usuario.getTelefone());
+        }
+
         if(this.foto != null){
             int blobLength = (int) this.foto.getData().length();
             achadosDTO.setFotoBase64(new String(Base64Utils.encode(this.foto.getData().getBytes(1, blobLength))));
@@ -121,4 +131,20 @@ public class Achados {
         return achadosDTO;
     }
 
+
+    public boolean isMostrarTelefone() {
+        return mostrarTelefone;
+    }
+
+    public void setMostrarTelefone(boolean mostrarTelefone) {
+        this.mostrarTelefone = mostrarTelefone;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
 }

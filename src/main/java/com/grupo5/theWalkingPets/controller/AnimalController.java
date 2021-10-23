@@ -35,6 +35,8 @@ public class AnimalController {
     @GetMapping("/adocao")
     public ResponseEntity<?> listagemAdoacao(@RequestBody(required = false) AnimalFilter animalFilter, HttpServletRequest request)  {
         //TODO - mostrar apenas os da mesma cidade ?
+        //TODO - Pegar localização atual - vinda do front e converter para bairro, cidade e uf ?
+
         Usuario user = usuarioService.buscarUsuarioPorToken(request.getHeader("Authorization"));
         return ResponseEntity.ok().body(animalService.buscarPorFiltroParaListagem(animalFilter, user));
     }

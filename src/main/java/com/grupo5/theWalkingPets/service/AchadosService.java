@@ -2,6 +2,7 @@ package com.grupo5.theWalkingPets.service;
 
 import com.grupo5.theWalkingPets.dto.AchadosDTO;
 import com.grupo5.theWalkingPets.entity.Achados;
+import com.grupo5.theWalkingPets.entity.Usuario;
 import com.grupo5.theWalkingPets.repository.AchadosRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,8 +23,9 @@ public class AchadosService {
         this.fotoService = fotoService;
     }
 
-    public void salvar(Achados achados, MultipartFile foto){
+    public void salvar(Achados achados, MultipartFile foto, Usuario usuario){
         achados.setFoto(fotoService.salvar(foto));
+        achados.setUsuario(usuario);
         achadosRepository.save(achados);
     }
 
@@ -35,7 +37,7 @@ public class AchadosService {
         try{
             List<AchadosDTO> achadosDTOS =  new ArrayList<>();
 
-            for(Achados achado :achados){
+            for(Achados achado : achados){
                 achadosDTOS.add(achado.converterParaDTO());
             }
 
